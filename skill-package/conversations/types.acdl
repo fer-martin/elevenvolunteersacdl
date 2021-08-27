@@ -1,0 +1,98 @@
+namespace types
+
+import com.amazon.ask.types.builtins.AMAZON.DATE
+import com.amazon.ask.types.builtins.AMAZON.DURATION
+import com.amazon.ask.types.builtins.AMAZON.NUMBER
+import com.amazon.ask.types.builtins.AMAZON.TIME
+import slotTypes.service
+
+type USetRequestVolunteer3RequestType {
+  DATE date
+  service service
+  TIME time
+}
+
+type USetInformTimeRequestType {
+  TIME time
+}
+
+type USetInformServiceRequestType {
+  service service
+}
+
+type USetInformDurationRequestType {
+  DURATION duration
+}
+
+type PAYLOAD_TYPE0 {
+  DATE date
+  DURATION duration
+  service service
+  TIME time
+}
+
+type PAYLOAD_TYPE1 {
+  VolunteerRequest volunteerRequest
+}
+
+type USetRequestVolunteer1RequestType {
+  DATE date
+  service service
+}
+
+type PAYLOAD_TYPE2 {
+  DATE date
+  DURATION duration
+  service service
+  TIME time
+}
+
+type VolunteerRequest {
+  DATE date
+  DURATION duration
+  service service
+  TIME time
+  NUMBER status
+}
+
+type USetInformTimeAndDurationRequestType {
+  DURATION duration
+  TIME time
+}
+
+type PAYLOAD_TYPE7 {
+  VolunteerRequest volunteerRequest
+}
+
+type USetRequestVolunteer2RequestType {
+  DATE date
+  DURATION duration
+  service service
+  TIME time
+}
+
+type USetInformDateRequestType {
+  DATE date
+}
+
+type PAYLOAD_TYPE3 {
+  VolunteerRequest volunteerRequest
+}
+
+type PAYLOAD_TYPE4 {
+  DATE date
+  DURATION duration
+  service service
+  TIME time
+}
+
+type PAYLOAD_TYPE5 {
+  VolunteerRequest volunteerRequest
+}
+
+type PAYLOAD_TYPE6 {
+  DATE date
+  DURATION duration
+  service service
+  TIME time
+}
