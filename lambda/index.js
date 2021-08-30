@@ -44,7 +44,8 @@ const RequestVolunteerApiHandler = {
             date: date,
             time: time,
             duration: duration,
-            status: 0
+            status: 0,
+            message: "The service id is 1234."
         };
 
         return handlerInput.responseBuilder

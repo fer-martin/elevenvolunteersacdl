@@ -1,5 +1,6 @@
 namespace types
 
+import com.amazon.alexa.schema.String
 import com.amazon.ask.types.builtins.AMAZON.DATE
 import com.amazon.ask.types.builtins.AMAZON.DURATION
 import com.amazon.ask.types.builtins.AMAZON.NUMBER
@@ -13,6 +14,7 @@ type VolunteerRequest {
   service service
   TIME time
   NUMBER status
+  String message
 }
 
 /* Utterance Sets Slots types */
