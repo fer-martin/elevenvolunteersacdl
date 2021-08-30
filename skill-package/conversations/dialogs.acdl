@@ -35,10 +35,12 @@ import utterances.USetRequestVolunteer3
 /* Requests a volunteer, initial utterance has no parameters */
 dialog Nothing dialogName_RequestVolunteer0() {
   sample {
+    //i need a volunteer
     expect(
       act = Invoke,
       event = USetRequestVolunteer0
     )
+    //for what service?
     response(
       act = Request {
         arguments = [
@@ -49,10 +51,12 @@ dialog Nothing dialogName_RequestVolunteer0() {
         apla = RequestServicePrompt
       }
     )
+    //a guide dog
     USetInformServiceRequest = expect(
       act = Inform,
       event = USetInformService
     )
+    //on what date?
     response(
       act = Request {
         arguments = [
@@ -63,10 +67,12 @@ dialog Nothing dialogName_RequestVolunteer0() {
         apla = RequestDatePrompt
       }
     )
+    //tomorow
     USetInformDateRequest = expect(
       act = Inform,
       event = USetInformDate
     )
+    //at what time?
     response(
       act = Request {
         arguments = [
@@ -77,10 +83,12 @@ dialog Nothing dialogName_RequestVolunteer0() {
         apla = RequestTimePrompt
       }
     )
+    //at ten a m
     USetInformTimeRequest = expect(
       act = Inform,
       event = USetInformTime
     )
+    //for how long?
     response(
       act = Request {
         arguments = [
@@ -91,10 +99,12 @@ dialog Nothing dialogName_RequestVolunteer0() {
         apla = RequestDurationPrompt
       }
     )
+    //one hour
     USetInformDurationRequest = expect(
       act = Inform,
       event = USetInformDuration
     )
+    //ok i will ask for a volunteer blah blah blah.. ok?
     response(
       act = ConfirmAction {
         actionName = APIRequestVolunteer
@@ -109,16 +119,19 @@ dialog Nothing dialogName_RequestVolunteer0() {
         apla = ConfirmRequestPrompt
       }
     )
+    //yes!
     expect(
       act = Affirm,
       event = USetAffirm
     )
+    //... does the api call requesting the volunteer to lambda ...
     volunteerRequest0 = APIRequestVolunteer(
       date = USetInformDateRequest.date,
       duration = USetInformDurationRequest.duration,
       service = USetInformServiceRequest.service,
       time = USetInformTimeRequest.time
     )
+    //i have requested the volunteer!
     response(
       act = Notify {
         success = true,
@@ -137,10 +150,12 @@ dialog Nothing dialogName_RequestVolunteer0() {
 /* Requests volunteer with service and date */
 dialog Nothing dialogName_RequestVolunteer1() {
   sample {
+    //i need a guide dog tomorrow
     USetRequestVolunteer1Request = expect(
       act = Invoke,
       event = USetRequestVolunteer1
     )
+    //at what time?
     response(
       act = Request {
         arguments = [
@@ -151,10 +166,12 @@ dialog Nothing dialogName_RequestVolunteer1() {
         apla = RequestTimePrompt
       }
     )
+    //at seven p m for one hour
     USetInformTimeAndDurationRequest = expect(
       act = Inform,
       event = USetInformTimeAndDuration
     )
+    //ok i will ask for a volunteer.... ok?
     response(
       act = ConfirmAction {
         actionName = APIRequestVolunteer
@@ -169,11 +186,13 @@ dialog Nothing dialogName_RequestVolunteer1() {
         apla = ConfirmRequestPrompt
       }
     )
+    //yep
     expect(
       act = Affirm,
       event = USetAffirm
     )
-    ensure(
+    //let's make sure all the arguments are in
+    ensure( //service
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -185,7 +204,7 @@ dialog Nothing dialogName_RequestVolunteer1() {
         }
       ]
     )
-    ensure(
+    ensure( //date
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -197,7 +216,7 @@ dialog Nothing dialogName_RequestVolunteer1() {
         }
       ]
     )
-    ensure(
+    ensure( //time
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -209,7 +228,7 @@ dialog Nothing dialogName_RequestVolunteer1() {
         }
       ]
     )
-    ensure(
+    ensure( //duration
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -221,12 +240,14 @@ dialog Nothing dialogName_RequestVolunteer1() {
         }
       ]
     )
+    // ... call the API ...
     volunteerRequest0 = APIRequestVolunteer(
       date = USetRequestVolunteer1Request.date,
       duration = USetInformTimeAndDurationRequest.duration,
       service = USetRequestVolunteer1Request.service,
       time = USetInformTimeAndDurationRequest.time
     )
+    // ... and notify the user, done!
     response(
       act = Notify {
         success = true,
@@ -245,10 +266,12 @@ dialog Nothing dialogName_RequestVolunteer1() {
 /* Requests volunteer with the four parameters */
 dialog Nothing dialogName_RequestVolunteer2() {
   sample {
+    // i need a guide dog tomorrow at seven a m for one hour
     USetRequestVolunteer2Request = expect(
       act = Invoke,
       event = USetRequestVolunteer2
     )
+    // ok, i will ask for ..... ok?
     response(
       act = ConfirmAction {
         actionName = APIRequestVolunteer
@@ -263,11 +286,13 @@ dialog Nothing dialogName_RequestVolunteer2() {
         apla = ConfirmRequestPrompt
       }
     )
+    //hell yes
     expect(
       act = Affirm,
       event = USetAffirm
     )
-    ensure(
+    // ensure all arguments are in
+    ensure( //service
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -279,7 +304,7 @@ dialog Nothing dialogName_RequestVolunteer2() {
         }
       ]
     )
-    ensure(
+    ensure( //date
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -291,7 +316,7 @@ dialog Nothing dialogName_RequestVolunteer2() {
         }
       ]
     )
-    ensure(
+    ensure( //time
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -303,7 +328,7 @@ dialog Nothing dialogName_RequestVolunteer2() {
         }
       ]
     )
-    ensure(
+    ensure( //duration
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -315,12 +340,14 @@ dialog Nothing dialogName_RequestVolunteer2() {
         }
       ]
     )
+    // ... call the API ...
     volunteerRequest0 = APIRequestVolunteer(
       date = USetRequestVolunteer2Request.date,
       duration = USetRequestVolunteer2Request.duration,
       service = USetRequestVolunteer2Request.service,
       time = USetRequestVolunteer2Request.time
     )
+    // done!
     response(
       act = Notify {
         success = true,
@@ -339,10 +366,12 @@ dialog Nothing dialogName_RequestVolunteer2() {
 /* Requests volunteers with service, date and time */
 dialog Nothing dialogName_RequestVolunteer3() {
   sample {
+    // i need a volunteer with a guide dog tomorrow at seven a m
     USetRequestVolunteer3Request = expect(
       act = Invoke,
       event = USetRequestVolunteer3
     )
+    // for how long?
     response(
       act = Request {
         arguments = [
@@ -353,10 +382,12 @@ dialog Nothing dialogName_RequestVolunteer3() {
         apla = RequestDurationPrompt
       }
     )
+    // one hour
     USetInformDurationRequest = expect(
       act = Inform,
       event = USetInformDuration
     )
+    // ok i will ask for it, ok?
     response(
       act = ConfirmAction {
         actionName = APIRequestVolunteer
@@ -371,11 +402,13 @@ dialog Nothing dialogName_RequestVolunteer3() {
         apla = ConfirmRequestPrompt
       }
     )
+    //of course
     expect(
       act = Affirm,
       event = USetAffirm
     )
-    ensure(
+    //ensure the arguments are in
+    ensure( //service
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -387,7 +420,7 @@ dialog Nothing dialogName_RequestVolunteer3() {
         }
       ]
     )
-    ensure(
+    ensure( //date
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -399,7 +432,7 @@ dialog Nothing dialogName_RequestVolunteer3() {
         }
       ]
     )
-    ensure(
+    ensure( //time
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -411,7 +444,7 @@ dialog Nothing dialogName_RequestVolunteer3() {
         }
       ]
     )
-    ensure(
+    ensure( //duration
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
@@ -423,12 +456,14 @@ dialog Nothing dialogName_RequestVolunteer3() {
         }
       ]
     )
+    // ... call the API ...
     volunteerRequest0 = APIRequestVolunteer(
       date = USetRequestVolunteer3Request.date,
       duration = USetInformDurationRequest.duration,
       service = USetRequestVolunteer3Request.service,
       time = USetRequestVolunteer3Request.time
     )
+    // done!
     response(
       act = Notify {
         success = true,

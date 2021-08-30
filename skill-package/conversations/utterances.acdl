@@ -10,6 +10,8 @@ import types.USetRequestInformServiceAndDateType
 import types.USetRequestInformAllType
 import types.USetRequestInformServiceDateAndTimeType
 
+// Utterances for the several requests
+
 USetRequestVolunteer0 = utterances(
   samples = [
     "I need help with something",
@@ -74,6 +76,8 @@ USetRequestVolunteer3 = utterances<USetRequestInformServiceDateAndTimeType>(
   ]
 )
 
+// utterances for informing the arguments
+
 USetInformDate = utterances<USetInformDateRequestType>(
   samples = [
     "for {date}",
@@ -109,6 +113,8 @@ USetInformTimeAndDuration = utterances<USetInformTimeAndDurationRequestType>(
     "at {time} for {duration}"
   ]
 )
+
+// utterances for confirming the call
 
 USetAffirm = utterances(
   samples = [
