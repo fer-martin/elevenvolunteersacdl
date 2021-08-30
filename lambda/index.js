@@ -27,7 +27,8 @@ const util = require('./util');
  */
 const RequestVolunteerApiHandler = {
     canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'APIRequestVolunteer');
+        //ATENCION: Con los ACDL aparentemente le prefija el namespace a la api call
+        return util.isApiRequest(handlerInput, 'apis.APIRequestVolunteer');
     },
     handle(handlerInput) {
         console.log("Api Request [APIRequestVolunteer]: ", JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
