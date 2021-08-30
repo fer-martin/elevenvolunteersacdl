@@ -201,6 +201,18 @@ dialog Nothing dialogName_RequestVolunteer1() {
       requestArgs = [
         RequestArguments {
           response = MultiModalResponse {
+            apla = RequestTimePrompt
+          },
+          arguments = [
+            APIRequestVolunteer.arguments.time
+          ]
+        }
+      ]
+    )
+    ensure(
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
             apla = RequestDurationPrompt
           },
           arguments = [
@@ -209,7 +221,6 @@ dialog Nothing dialogName_RequestVolunteer1() {
         }
       ]
     )
-    //Why not ensure time??
     volunteerRequest0 = APIRequestVolunteer(
       date = USetRequestVolunteer1Request.date,
       duration = USetInformTimeAndDurationRequest.duration,
@@ -400,7 +411,18 @@ dialog Nothing dialogName_RequestVolunteer3() {
         }
       ]
     )
-    //why not ensure duration??
+    ensure(
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDurationPrompt
+          },
+          arguments = [
+            APIRequestVolunteer.arguments.duration
+          ]
+        }
+      ]
+    )
     volunteerRequest0 = APIRequestVolunteer(
       date = USetRequestVolunteer3Request.date,
       duration = USetInformDurationRequest.duration,
