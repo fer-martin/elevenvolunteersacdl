@@ -32,6 +32,34 @@ import utterances.USetRequestVolunteer1
 import utterances.USetRequestVolunteer2
 import utterances.USetRequestVolunteer3
 
+// Probemos de hacer un modulo reusable para la respuesta de la api
+
+dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
+  sample {
+    //... does the api call requesting the volunteer to lambda ...
+    volunteerRequest0 = APIRequestVolunteer(
+      date = args.date,
+      duration = args.duration,
+      service = args.service,
+      time = args.time
+    )
+    //i have requested the volunteer!
+    response(
+      act = Notify {
+        success = true,
+        actionName = APIRequestVolunteer
+      },
+      payload = NotifyApiResponseType {
+        volunteerRequest = volunteerRequest0
+      },
+      response = MultiModalResponse {
+        apla = RequestConfirmedPrompt
+      }
+    )
+  }
+}
+
+
 /* Requests a volunteer, initial utterance has no parameters */
 dialog Nothing dialogName_RequestVolunteer0() {
   sample {
@@ -124,26 +152,12 @@ dialog Nothing dialogName_RequestVolunteer0() {
       act = Affirm,
       event = USetAffirm
     )
-    //... does the api call requesting the volunteer to lambda ...
-    volunteerRequest0 = APIRequestVolunteer(
+    ThisIsTheAPICall(args = ConfirmApiType {
       date = USetInformDateRequest.date,
       duration = USetInformDurationRequest.duration,
       service = USetInformServiceRequest.service,
       time = USetInformTimeRequest.time
-    )
-    //i have requested the volunteer!
-    response(
-      act = Notify {
-        success = true,
-        actionName = APIRequestVolunteer
-      },
-      payload = NotifyApiResponseType {
-        volunteerRequest = volunteerRequest0
-      },
-      response = MultiModalResponse {
-        apla = RequestConfirmedPrompt
-      }
-    )
+    })
   }
 }
 
@@ -240,26 +254,12 @@ dialog Nothing dialogName_RequestVolunteer1() {
         }
       ]
     )
-    // ... call the API ...
-    volunteerRequest0 = APIRequestVolunteer(
+    ThisIsTheAPICall(args = ConfirmApiType {
       date = USetRequestVolunteer1Request.date,
       duration = USetInformTimeAndDurationRequest.duration,
       service = USetRequestVolunteer1Request.service,
       time = USetInformTimeAndDurationRequest.time
-    )
-    // ... and notify the user, done!
-    response(
-      act = Notify {
-        success = true,
-        actionName = APIRequestVolunteer
-      },
-      payload = NotifyApiResponseType {
-        volunteerRequest = volunteerRequest0
-      },
-      response = MultiModalResponse {
-        apla = RequestConfirmedPrompt
-      }
-    )
+    })
   }
 }
 
@@ -340,26 +340,12 @@ dialog Nothing dialogName_RequestVolunteer2() {
         }
       ]
     )
-    // ... call the API ...
-    volunteerRequest0 = APIRequestVolunteer(
+    ThisIsTheAPICall(args = ConfirmApiType {
       date = USetRequestVolunteer2Request.date,
       duration = USetRequestVolunteer2Request.duration,
       service = USetRequestVolunteer2Request.service,
       time = USetRequestVolunteer2Request.time
-    )
-    // done!
-    response(
-      act = Notify {
-        success = true,
-        actionName = APIRequestVolunteer
-      },
-      payload = NotifyApiResponseType {
-        volunteerRequest = volunteerRequest0
-      },
-      response = MultiModalResponse {
-        apla = RequestConfirmedPrompt
-      }
-    )
+    })
   }
 }
 
@@ -456,25 +442,11 @@ dialog Nothing dialogName_RequestVolunteer3() {
         }
       ]
     )
-    // ... call the API ...
-    volunteerRequest0 = APIRequestVolunteer(
+    ThisIsTheAPICall(args = ConfirmApiType {
       date = USetRequestVolunteer3Request.date,
       duration = USetInformDurationRequest.duration,
       service = USetRequestVolunteer3Request.service,
       time = USetRequestVolunteer3Request.time
-    )
-    // done!
-    response(
-      act = Notify {
-        success = true,
-        actionName = APIRequestVolunteer
-      },
-      payload = NotifyApiResponseType {
-        volunteerRequest = volunteerRequest0
-      },
-      response = MultiModalResponse {
-        apla = RequestConfirmedPrompt
-      }
-    )
+    })
   }
 }

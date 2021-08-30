@@ -13,3 +13,9 @@ Para el deploy, no olvidarse de hacer antes
 
 https://developer.amazon.com/en-US/docs/alexa/conversations/about-acdl.html
 
+
+# Bug en APLA?
+
+Si devuelvo un parametro tipo String y se lo envio al payload del APLA dentro de un objeto
+cuando lo referencio en un Speech como "${payload.xxxx.mistring}" me dice "something went wrong"
+pero si lo concateno al menos con un espacio " ${payload.xxxx.mistring}" lo locuta ok.
