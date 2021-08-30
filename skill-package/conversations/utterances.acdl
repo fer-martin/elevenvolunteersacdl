@@ -6,64 +6,9 @@ import types.USetInformDurationRequestType
 import types.USetInformServiceRequestType
 import types.USetInformTimeAndDurationRequestType
 import types.USetInformTimeRequestType
-import types.USetRequestVolunteer1RequestType
-import types.USetRequestVolunteer2RequestType
-import types.USetRequestVolunteer3RequestType
-
-USetRequestVolunteer3 = utterances<USetRequestVolunteer3RequestType>(
-  samples = [
-    "get me a volunteer for {service} for {date} at {time}",
-    "find a volunteer for {service} for {date} at {time}",
-    "I want a volunteer for {service} at {time} {date}",
-    "I want a volunteer for {service} at {time} on {date}",
-    "i need a volunteer for {service} for {date} at {time}",
-    "I want to request a volunteer for {service} for {date} at {time}"
-  ]
-)
-
-USetRequestVolunteer2 = utterances<USetRequestVolunteer2RequestType>(
-  samples = [
-    "get me a volunteer {date} at {time} for {service} for {duration}",
-    "find a volunteer for {service} , on {date} at {time} for {duration}",
-    "I need a volunteer for {service} , {date} at {time} for {duration}"
-  ]
-)
-
-USetInformTimeAndDuration = utterances<USetInformTimeAndDurationRequestType>(
-  samples = [
-    "for {duration} at {time}",
-    "at {time} for {duration}"
-  ]
-)
-
-USetInformDuration = utterances<USetInformDurationRequestType>(
-  samples = [
-    "{duration}",
-    "for {duration}"
-  ]
-)
-
-USetInformTime = utterances<USetInformTimeRequestType>(
-  samples = [
-    "{time}",
-    "at {time}"
-  ]
-)
-
-USetAffirm = utterances(
-  samples = [
-    "let's do it",
-    "ok",
-    "yes"
-  ]
-)
-
-USetInformDate = utterances<USetInformDateRequestType>(
-  samples = [
-    "for {date}",
-    "{date}"
-  ]
-)
+import types.USetRequestInformServiceAndDateType
+import types.USetRequestInformAllType
+import types.USetRequestInformServiceDateAndTimeType
 
 USetRequestVolunteer0 = utterances(
   samples = [
@@ -75,15 +20,7 @@ USetRequestVolunteer0 = utterances(
   ]
 )
 
-USetInformService = utterances<USetInformServiceRequestType>(
-  samples = [
-    "to {service}",
-    "for {service}",
-    "{service}"
-  ]
-)
-
-USetRequestVolunteer1 = utterances<USetRequestVolunteer1RequestType>(
+USetRequestVolunteer1 = utterances<USetRequestInformServiceAndDateType>(
   samples = [
     "i want  a volunteer for {service} on {date}",
     "i want  a volunteer for {service} for {date}",
@@ -115,5 +52,68 @@ USetRequestVolunteer1 = utterances<USetRequestVolunteer1RequestType>(
     "find a volunteer  {date} for {service}",
     "find a volunteer on {date} for {service}",
     "find a volunteer for {date} for {service}"
+  ]
+)
+
+USetRequestVolunteer2 = utterances<USetRequestInformAllType>(
+  samples = [
+    "get me a volunteer {date} at {time} for {service} for {duration}",
+    "find a volunteer for {service} , on {date} at {time} for {duration}",
+    "I need a volunteer for {service} , {date} at {time} for {duration}"
+  ]
+)
+
+USetRequestVolunteer3 = utterances<USetRequestInformServiceDateAndTimeType>(
+  samples = [
+    "get me a volunteer for {service} for {date} at {time}",
+    "find a volunteer for {service} for {date} at {time}",
+    "I want a volunteer for {service} at {time} {date}",
+    "I want a volunteer for {service} at {time} on {date}",
+    "i need a volunteer for {service} for {date} at {time}",
+    "I want to request a volunteer for {service} for {date} at {time}"
+  ]
+)
+
+USetInformDate = utterances<USetInformDateRequestType>(
+  samples = [
+    "for {date}",
+    "{date}"
+  ]
+)
+
+USetInformService = utterances<USetInformServiceRequestType>(
+  samples = [
+    "to {service}",
+    "for {service}",
+    "{service}"
+  ]
+)
+
+USetInformDuration = utterances<USetInformDurationRequestType>(
+  samples = [
+    "{duration}",
+    "for {duration}"
+  ]
+)
+
+USetInformTime = utterances<USetInformTimeRequestType>(
+  samples = [
+    "{time}",
+    "at {time}"
+  ]
+)
+
+USetInformTimeAndDuration = utterances<USetInformTimeAndDurationRequestType>(
+  samples = [
+    "for {duration} at {time}",
+    "at {time} for {duration}"
+  ]
+)
+
+USetAffirm = utterances(
+  samples = [
+    "let's do it",
+    "ok",
+    "yes"
   ]
 )
