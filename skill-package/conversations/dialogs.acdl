@@ -1,17 +1,20 @@
 namespace dialogs
 
 import apis.APIRequestVolunteer
+import apis.APICheckParams
 import com.amazon.alexa.ask.conversations.Affirm
 import com.amazon.alexa.ask.conversations.ConfirmAction
 import com.amazon.alexa.ask.conversations.Inform
 import com.amazon.alexa.ask.conversations.Invoke
 import com.amazon.alexa.ask.conversations.MultiModalResponse
 import com.amazon.alexa.ask.conversations.Notify
+import com.amazon.alexa.ask.conversations.Offer
 import com.amazon.alexa.ask.conversations.Request
 import com.amazon.alexa.ask.conversations.RequestArguments
 import com.amazon.alexa.ask.conversations.ensure
 import com.amazon.alexa.ask.conversations.expect
 import com.amazon.alexa.ask.conversations.response
+import com.amazon.alexa.ask.conversations.CarryOverArgument
 import com.amazon.alexa.schema.Nothing
 import prompts.ConfirmRequestPrompt
 import prompts.RequestConfirmedPrompt
@@ -21,6 +24,8 @@ import prompts.RequestDurationPrompt
 import prompts.RequestServicePrompt
 import prompts.RequestTimePrompt
 import types.ConfirmApiType
+import types.ValidatedConfirmApiType
+import types.ValidatedArgs
 import types.NotifyApiResponseType
 import utterances.USetAffirm
 import utterances.USetInformDate
@@ -37,6 +42,52 @@ import utterances.USetRequestVolunteer3
 
 dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
   sample {
+    validated = APICheckParams(
+      date = args.date,
+      duration = args.duration,
+      service = args.service,
+      time = args.time
+    )
+
+    //ok i will ask for a volunteer blah blah blah
+    response(
+      act = Notify {
+        success = true,
+        actionName = APICheckParams
+      },
+      payload = ValidatedConfirmApiType {
+        validated = validated
+      },
+      response = MultiModalResponse {
+        apla = ConfirmRequestPrompt
+      },
+      nextAct = Offer {
+        actionName = APIRequestVolunteer,
+        carryOverArguments = [ 
+          CarryOverArgument {
+            argument = APIRequestVolunteer.arguments.date, 
+            source = args.date
+          },
+          CarryOverArgument {
+            argument = APIRequestVolunteer.arguments.duration, 
+            source = args.duration
+          },
+          CarryOverArgument {
+            argument = APIRequestVolunteer.arguments.service, 
+            source = args.service
+          },
+          CarryOverArgument {
+            argument = APIRequestVolunteer.arguments.time, 
+            source = args.time
+          }
+        ]
+      }
+    )
+    //yes!
+    expect(
+      act = Invoke,
+      event = USetAffirm
+    )
     //... does the api call requesting the volunteer to lambda ...
     result = APIRequestVolunteer(
       date = args.date,
@@ -152,26 +203,6 @@ dialog Nothing dialogName_RequestVolunteer0() {
       act = Inform,
       event = USetInformDuration
     )
-    //ok i will ask for a volunteer blah blah blah.. ok?
-    response(
-      act = ConfirmAction {
-        actionName = APIRequestVolunteer
-      },
-      payload = ConfirmApiType {
-        date = USetInformDateRequest.date,
-        duration = USetInformDurationRequest.duration,
-        service = USetInformServiceRequest.service,
-        time = USetInformTimeRequest.time
-      },
-      response = MultiModalResponse {
-        apla = ConfirmRequestPrompt
-      }
-    )
-    //yes!
-    expect(
-      act = Affirm,
-      event = USetAffirm
-    )
     ThisIsTheAPICall(args = ConfirmApiType {
       date = USetInformDateRequest.date,
       duration = USetInformDurationRequest.duration,
@@ -204,26 +235,6 @@ dialog Nothing dialogName_RequestVolunteer1() {
     USetInformTimeAndDurationRequest = expect(
       act = Inform,
       event = USetInformTimeAndDuration
-    )
-    //ok i will ask for a volunteer.... ok?
-    response(
-      act = ConfirmAction {
-        actionName = APIRequestVolunteer
-      },
-      payload = ConfirmApiType {
-        date = USetRequestVolunteer1Request.date,
-        duration = USetInformTimeAndDurationRequest.duration,
-        service = USetRequestVolunteer1Request.service,
-        time = USetInformTimeAndDurationRequest.time
-      },
-      response = MultiModalResponse {
-        apla = ConfirmRequestPrompt
-      }
-    )
-    //yep
-    expect(
-      act = Affirm,
-      event = USetAffirm
     )
     //let's make sure all the arguments are in
     ensure( //service
@@ -290,26 +301,6 @@ dialog Nothing dialogName_RequestVolunteer2() {
     USetRequestVolunteer2Request = expect(
       act = Invoke,
       event = USetRequestVolunteer2
-    )
-    // ok, i will ask for ..... ok?
-    response(
-      act = ConfirmAction {
-        actionName = APIRequestVolunteer
-      },
-      payload = ConfirmApiType {
-        date = USetRequestVolunteer2Request.date,
-        duration = USetRequestVolunteer2Request.duration,
-        service = USetRequestVolunteer2Request.service,
-        time = USetRequestVolunteer2Request.time
-      },
-      response = MultiModalResponse {
-        apla = ConfirmRequestPrompt
-      }
-    )
-    //hell yes
-    expect(
-      act = Affirm,
-      event = USetAffirm
     )
     // ensure all arguments are in
     ensure( //service
@@ -392,26 +383,6 @@ dialog Nothing dialogName_RequestVolunteer3() {
     USetInformDurationRequest = expect(
       act = Inform,
       event = USetInformDuration
-    )
-    // ok i will ask for it, ok?
-    response(
-      act = ConfirmAction {
-        actionName = APIRequestVolunteer
-      },
-      payload = ConfirmApiType {
-        date = USetRequestVolunteer3Request.date,
-        duration = USetInformDurationRequest.duration,
-        service = USetRequestVolunteer3Request.service,
-        time = USetRequestVolunteer3Request.time
-      },
-      response = MultiModalResponse {
-        apla = ConfirmRequestPrompt
-      }
-    )
-    //of course
-    expect(
-      act = Affirm,
-      event = USetAffirm
     )
     //ensure the arguments are in
     ensure( //service

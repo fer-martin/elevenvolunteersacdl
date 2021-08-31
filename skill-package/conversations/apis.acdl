@@ -5,7 +5,13 @@ import com.amazon.ask.types.builtins.AMAZON.DURATION
 import com.amazon.ask.types.builtins.AMAZON.TIME
 import slotTypes.service
 import types.VolunteerRequest
+import types.ValidatedArgs
 
 // api call to request a volunteer
 
 action VolunteerRequest APIRequestVolunteer(DURATION duration, TIME time, DATE date, service service)
+
+// api call to validate parameters
+// se marcan todos los parametros como opcionales porque si no me da un error
+// de compilacion que faltan request prompts en el sample
+action ValidatedArgs APICheckParams(optional DURATION duration, optional TIME time, optional DATE date, optional service service)

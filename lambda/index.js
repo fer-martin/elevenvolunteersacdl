@@ -16,6 +16,40 @@
 
 const Alexa = require('ask-sdk-core');
 const util = require('./util');
+const moment = require('moment-timezone');
+/**
+ * API Handler for Check Params
+ */
+const CheckParamsApiHandler = {
+    canHandle(handlerInput) {
+        //ATENCION: Con los ACDL aparentemente le prefija el namespace a la api call
+        return util.isApiRequest(handlerInput, 'apis.APICheckParams');
+    },
+    handle(handlerInput) {
+        console.log("Api Request [APICheckParams]: ", JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
+
+        const slots = util.getAPISlotValues(handlerInput);
+        const service = slots["service"].resolved;
+        const date = slots["date"].resolved;
+        const time = slots["time"].resolved;
+        const duration = slots["duration"].resolved;
+
+        let params = {
+            service: service,
+            date: moment(date).locale('en').format('dddd, MMMM D'),
+            start: moment('2000-01-01T' + time).locale('en').format('h A'),
+            end: moment('2000-01-01T' + time).add(moment.duration(duration)).locale('en').format('h A'),
+            duration: moment.duration(duration).locale('en').humanize(),
+            status: 0,
+            message: "This service is available only for blind families."
+        };
+
+        return handlerInput.responseBuilder
+            .withApiResponse(params)
+            .withShouldEndSession(false)
+            .getResponse();
+    }
+}
 
 /**
  * API Handler for RecordColor API
@@ -44,8 +78,8 @@ const RequestVolunteerApiHandler = {
             date: date,
             time: time,
             duration: duration,
-            status: 0,
-            message: "The service id is 1234."
+            status: 1,
+            message: "The service overlaps."
         };
 
         return handlerInput.responseBuilder
@@ -157,6 +191,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addResponseInterceptors(LogResponseInterceptor)
     .addRequestHandlers(
         RequestVolunteerApiHandler,
+        CheckParamsApiHandler,
         FallbackIntentHandler,
         SessionEndedRequestHandler
     )

@@ -17,6 +17,16 @@ type VolunteerRequest {
   String message
 }
 
+type ValidatedArgs {
+  String service
+  String date
+  String start
+  String end
+  String duration
+  NUMBER status
+  String message
+}
+
 /* Utterance Sets Slots types */
 type USetInformServiceRequestType {
   service service
@@ -63,6 +73,10 @@ type ConfirmApiType {
   DURATION duration
   service service
   TIME time
+}
+
+type ValidatedConfirmApiType {
+  ValidatedArgs validated
 }
 
 type NotifyApiResponseType {
