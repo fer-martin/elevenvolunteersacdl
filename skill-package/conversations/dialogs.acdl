@@ -15,6 +15,7 @@ import com.amazon.alexa.ask.conversations.response
 import com.amazon.alexa.schema.Nothing
 import prompts.ConfirmRequestPrompt
 import prompts.RequestConfirmedPrompt
+import prompts.RequestRejectedPrompt
 import prompts.RequestDatePrompt
 import prompts.RequestDurationPrompt
 import prompts.RequestServicePrompt
@@ -37,25 +38,44 @@ import utterances.USetRequestVolunteer3
 dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
   sample {
     //... does the api call requesting the volunteer to lambda ...
-    volunteerRequest0 = APIRequestVolunteer(
+    result = APIRequestVolunteer(
       date = args.date,
       duration = args.duration,
       service = args.service,
       time = args.time
     )
-    //i have requested the volunteer!
-    response(
-      act = Notify {
-        success = true,
-        actionName = APIRequestVolunteer
-      },
-      payload = NotifyApiResponseType {
-        volunteerRequest = volunteerRequest0
-      },
-      response = MultiModalResponse {
-        apla = RequestConfirmedPrompt
-      }
-    )
+
+    if (result.status == 0) {
+      // la llamada a la API anduvo ok!
+      //i have requested the volunteer!
+      response(
+        act = Notify {
+          success = true,
+          actionName = APIRequestVolunteer
+        },
+        payload = NotifyApiResponseType {
+          volunteerRequest = result
+        },
+        response = MultiModalResponse {
+          apla = RequestConfirmedPrompt
+        }
+      )
+    } else {
+      //hubo un error, llamo a un response de error
+      //sorry!
+      response(
+        act = Notify {
+          success = false,
+          actionName = APIRequestVolunteer
+        },
+        payload = NotifyApiResponseType {
+          volunteerRequest = result
+        },
+        response = MultiModalResponse {
+          apla = RequestRejectedPrompt
+        }
+      )
+    }
   }
 }
 
