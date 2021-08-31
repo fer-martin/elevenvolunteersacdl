@@ -34,6 +34,12 @@ const CheckParamsApiHandler = {
         const time = slots["time"].resolved;
         const duration = slots["duration"].resolved;
 
+        const serviceid = slots["service"].id
+        let message = ""
+        if (serviceid == "65100") {
+            message = "This service is available only for blind families."
+        }
+
         let params = {
             service: service,
             date: moment(date).locale('en').format('dddd, MMMM D'),
@@ -41,7 +47,7 @@ const CheckParamsApiHandler = {
             end: moment('2000-01-01T' + time).add(moment.duration(duration)).locale('en').format('h A'),
             duration: moment.duration(duration).locale('en').humanize(),
             status: 0,
-            message: "This service is available only for blind families."
+            message: message
         };
 
         return handlerInput.responseBuilder
@@ -78,9 +84,14 @@ const RequestVolunteerApiHandler = {
             date: date,
             time: time,
             duration: duration,
-            status: 1,
-            message: "The service overlaps."
+            status: 0,
+            message: ""
         };
+        //let's randomize the status!
+        if (Math.random() > 0.5) {
+            sessionAttributes.VolunteerRequest.status = 1
+            sessionAttributes.VolunteerRequest.message = "The service overlaps."
+        }
 
         return handlerInput.responseBuilder
             .withApiResponse(sessionAttributes.VolunteerRequest)
