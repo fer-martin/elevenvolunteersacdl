@@ -43,8 +43,9 @@
             {
               "id": "61000",
               "name": {
-                "value": "accompaniment",
+                "value": "general assistance",
                 "synonyms": [
+                  "accompaniment",
                   "assistance",
                   "make me company",
                   "companion",
@@ -55,9 +56,9 @@
             {
               "id": "61001",
               "name": {
-                "value": "telephone accompaniment",
+                "value": "phone assistance",
                 "synonyms": [
-                  "phone assistance",
+                  "telephone accompaniment",
                   "phone accompaniment",
                   "talk to me",
                   "talk to me on the phone",
@@ -77,8 +78,9 @@
             {
               "id": "17400",
               "name": {
-                "value": "information",
+                "value": "information assistance",
                 "synonyms": [
+                  "information",
                   "read to me",
                   "help me fill a form"
                 ]
@@ -97,8 +99,9 @@
             {
               "id": "17403",
               "name": {
-                "value": "digital",
+                "value": "digital assistance",
                 "synonyms": [
+                  "digital",
                   "help me with my mobile",
                   "help me with my tablet",
                   "help me with my smartphone",
@@ -113,7 +116,7 @@
             {
               "id": "65000",
               "name": {
-                "value": "cultural",
+                "value": "cultural assistance",
                 "synonyms": [
                   "museum",
                   "go to the museum",
@@ -140,8 +143,9 @@
             {
               "id": "64000",
               "name": {
-                "value": "sports",
+                "value": "sports assistance",
                 "synonyms": [
+                  "sports",
                   "play football",
                   "play golf",
                   "go running"
