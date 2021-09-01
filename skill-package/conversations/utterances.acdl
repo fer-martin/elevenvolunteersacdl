@@ -123,3 +123,12 @@ USetAffirm = utterances(
     "yes"
   ]
 )
+
+
+USetDeny = utterances(
+  samples = [
+    "no",
+    "nopes",
+    "not really"
+  ]
+)

@@ -3,6 +3,7 @@ namespace dialogs
 import apis.APIRequestVolunteer
 import apis.APICheckParams
 import com.amazon.alexa.ask.conversations.Affirm
+import com.amazon.alexa.ask.conversations.Bye
 import com.amazon.alexa.ask.conversations.ConfirmAction
 import com.amazon.alexa.ask.conversations.Inform
 import com.amazon.alexa.ask.conversations.Invoke
@@ -18,6 +19,7 @@ import com.amazon.alexa.ask.conversations.CarryOverArgument
 import com.amazon.alexa.schema.Nothing
 import prompts.ConfirmRequestPrompt
 import prompts.RequestConfirmedPrompt
+import prompts.RequestNotConfirmedPrompt
 import prompts.RequestRejectedPrompt
 import prompts.RequestDatePrompt
 import prompts.RequestDurationPrompt
@@ -28,6 +30,7 @@ import types.ValidatedConfirmApiType
 import types.ValidatedArgs
 import types.NotifyApiResponseType
 import utterances.USetAffirm
+import utterances.USetDeny
 import utterances.USetInformDate
 import utterances.USetInformDuration
 import utterances.USetInformService
@@ -41,6 +44,7 @@ import utterances.USetRequestVolunteer3
 // Probemos de hacer un modulo reusable para la respuesta de la api
 
 dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
+  //El usuario confirma los parametros
   sample {
     validated = APICheckParams(
       date = args.date,
@@ -127,6 +131,62 @@ dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
         }
       )
     }
+  }
+  //El usuario no confirma los parametros
+  sample {
+    validated = APICheckParams(
+      date = args.date,
+      duration = args.duration,
+      service = args.service,
+      time = args.time
+    )
+
+    //ok i will ask for a volunteer blah blah blah
+    response(
+      act = Notify {
+        success = true,
+        actionName = APICheckParams
+      },
+      payload = ValidatedConfirmApiType {
+        validated = validated
+      },
+      response = MultiModalResponse {
+        apla = ConfirmRequestPrompt
+      },
+      nextAct = Offer {
+        actionName = APIRequestVolunteer,
+        carryOverArguments = [ 
+          CarryOverArgument {
+            argument = APIRequestVolunteer.arguments.date, 
+            source = args.date
+          },
+          CarryOverArgument {
+            argument = APIRequestVolunteer.arguments.duration, 
+            source = args.duration
+          },
+          CarryOverArgument {
+            argument = APIRequestVolunteer.arguments.service, 
+            source = args.service
+          },
+          CarryOverArgument {
+            argument = APIRequestVolunteer.arguments.time, 
+            source = args.time
+          }
+        ]
+      }
+    )
+    //nope!
+    expect(
+      act = Invoke,
+      event = USetDeny
+    )
+    response(
+      act = Bye {
+      },
+      response = MultiModalResponse {
+        apla = RequestNotConfirmedPrompt
+      }
+    )
   }
 }
 
