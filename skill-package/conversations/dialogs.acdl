@@ -202,6 +202,55 @@ dialog Nothing dialog_RequestVolunteer() {
       act = Inform,
       event = USetInformDuration
     )
+    //let's make sure all the arguments are in
+    ensure( //service
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestServicePrompt
+          },
+          arguments = [
+            APIRequestVolunteer.arguments.service
+          ]
+        }
+      ]
+    )
+    ensure( //date
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDatePrompt
+          },
+          arguments = [
+            APIRequestVolunteer.arguments.date
+          ]
+        }
+      ]
+    )
+    ensure( //time
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestTimePrompt
+          },
+          arguments = [
+            APIRequestVolunteer.arguments.time
+          ]
+        }
+      ]
+    )
+    ensure( //duration
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDurationPrompt
+          },
+          arguments = [
+            APIRequestVolunteer.arguments.duration
+          ]
+        }
+      ]
+    )    
     ThisIsTheAPICall(args = ConfirmApiType {
       date = USetInformDateRequest.date,
       duration = USetInformDurationRequest.duration,
