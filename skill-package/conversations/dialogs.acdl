@@ -130,9 +130,8 @@ dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
   }
 }
 
-
-/* Requests a volunteer, initial utterance has no parameters */
-dialog Nothing dialogName_RequestVolunteer0() {
+dialog Nothing dialog_RequestVolunteer() {
+  /* Requests a volunteer, initial utterance has no parameters */
   sample {
     //i need a volunteer
     expect(
@@ -210,10 +209,7 @@ dialog Nothing dialogName_RequestVolunteer0() {
       time = USetInformTimeRequest.time
     })
   }
-}
-
-/* Requests volunteer with service and date */
-dialog Nothing dialogName_RequestVolunteer1() {
+  /* Requests volunteer with service and date */
   sample {
     //i need a guide dog tomorrow
     USetRequestVolunteer1Request = expect(
@@ -292,10 +288,7 @@ dialog Nothing dialogName_RequestVolunteer1() {
       time = USetInformTimeAndDurationRequest.time
     })
   }
-}
-
-/* Requests volunteer with the four parameters */
-dialog Nothing dialogName_RequestVolunteer2() {
+  /* Requests volunteer with the four parameters */
   sample {
     // i need a guide dog tomorrow at seven a m for one hour
     USetRequestVolunteer2Request = expect(
@@ -358,10 +351,7 @@ dialog Nothing dialogName_RequestVolunteer2() {
       time = USetRequestVolunteer2Request.time
     })
   }
-}
-
-/* Requests volunteers with service, date and time */
-dialog Nothing dialogName_RequestVolunteer3() {
+  /* Requests volunteers with service, date and time */
   sample {
     // i need a volunteer with a guide dog tomorrow at seven a m
     USetRequestVolunteer3Request = expect(
