@@ -6,7 +6,7 @@ import com.amazon.ask.types.builtins.AMAZON.DURATION
 import com.amazon.ask.types.builtins.AMAZON.NUMBER
 import com.amazon.ask.types.builtins.AMAZON.TIME
 import com.amazon.ask.types.builtins.AMAZON.DayOfWeek
-import slotTypes.service
+import slotTypes.*
 
 /* API calls types */
 type VolunteerRequest {

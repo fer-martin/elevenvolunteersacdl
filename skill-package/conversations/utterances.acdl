@@ -1,18 +1,7 @@
 namespace utterances
 
 import com.amazon.alexa.ask.conversations.utterances
-import types.USetInformDateRequestType
-import types.USetInformDurationRequestType
-import types.USetInformServiceRequestType
-import types.USetInformTimeAndDurationRequestType
-import types.USetInformTimeRequestType
-import types.USetRequestInformServiceAndDateType
-import types.USetRequestInformAllType
-import types.USetRequestInformServiceDateAndTimeType
-import types.USetInformDowRequestType
-import types.USetInformDowAndTimeRequestType
-import types.USetRequestRecurrInformServiceAndDow
-import types.USetRequestRecurrInformServiceDowAndTime
+import types.*
 
 // Utterances for the several requests
 

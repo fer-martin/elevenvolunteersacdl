@@ -1,8 +1,5 @@
 namespace dialogs
 
-import apis.APIRequestVolunteer
-import apis.APIValidateArgsOnce
-import apis.APIValidateArgsRecurring
 import com.amazon.alexa.ask.conversations.Affirm
 import com.amazon.alexa.ask.conversations.Bye
 import com.amazon.alexa.ask.conversations.ConfirmAction
@@ -18,40 +15,10 @@ import com.amazon.alexa.ask.conversations.expect
 import com.amazon.alexa.ask.conversations.response
 import com.amazon.alexa.ask.conversations.CarryOverArgument
 import com.amazon.alexa.schema.Nothing
-import prompts.ConfirmRequestPrompt
-import prompts.RequestConfirmedPrompt
-import prompts.RequestNotConfirmedPrompt
-import prompts.RequestRejectedPrompt
-import prompts.RequestDatePrompt
-import prompts.RequestDurationPrompt
-import prompts.RequestServicePrompt
-import prompts.RequestTimePrompt
-import prompts.RequestDateSincePrompt
-import prompts.RequestDateUntilPrompt
-import prompts.RequestDowPrompt
-import types.ConfirmApiType
-import types.ConfirmApiRecurringType
-import types.ValidatedConfirmApiType
-import types.ValidatedConfirmRecurringApiType
-import types.ValidatedArgsOnce
-import types.ValidatedArgsRecurring
-import types.NotifyApiResponseType
-import utterances.USetAffirm
-import utterances.USetDeny
-import utterances.USetInformDate
-import utterances.USetInformDuration
-import utterances.USetInformService
-import utterances.USetInformTime
-import utterances.USetInformTimeAndDuration
-import utterances.USetRequestVolunteer0
-import utterances.USetRequestVolunteer1
-import utterances.USetRequestVolunteer2
-import utterances.USetRequestVolunteer3
-import utterances.USetRequestVolunteer4
-import utterances.USetRequestVolunteer5
-import utterances.USetRequestVolunteer6
-import utterances.USetInformDateSince
-import utterances.USetInformDateUntil
+import apis.*
+import prompts.*
+import types.*
+import utterances.*
 
 // Probemos de hacer un modulo reusable para la respuesta de la api
 

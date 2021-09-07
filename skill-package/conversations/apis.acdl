@@ -4,11 +4,8 @@ import com.amazon.ask.types.builtins.AMAZON.DATE
 import com.amazon.ask.types.builtins.AMAZON.DURATION
 import com.amazon.ask.types.builtins.AMAZON.TIME
 import com.amazon.ask.types.builtins.AMAZON.DayOfWeek
-import slotTypes.service
-import types.VolunteerRequest
-import types.ValidatedArgsOnce
-import types.ValidatedArgsRecurring
-
+import slotTypes.*
+import types.*
 // api call to request a volunteer
 action VolunteerRequest APIRequestVolunteer()
 
