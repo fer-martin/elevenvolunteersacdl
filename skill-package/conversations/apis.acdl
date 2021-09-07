@@ -3,15 +3,19 @@ namespace apis
 import com.amazon.ask.types.builtins.AMAZON.DATE
 import com.amazon.ask.types.builtins.AMAZON.DURATION
 import com.amazon.ask.types.builtins.AMAZON.TIME
+import com.amazon.ask.types.builtins.AMAZON.DayOfWeek
 import slotTypes.service
 import types.VolunteerRequest
-import types.ValidatedArgs
+import types.ValidatedArgsOnce
+import types.ValidatedArgsRecurring
 
 // api call to request a volunteer
+action VolunteerRequest APIRequestVolunteer()
 
-action VolunteerRequest APIRequestVolunteer(DURATION duration, TIME time, DATE date, service service)
+// api call to validate arguments for a single volunteer request
+// saves parameters in session
+action ValidatedArgsOnce APIValidateArgsOnce(DURATION duration, TIME time, DATE date, service service)
 
-// api call to validate parameters
-// se marcan todos los parametros como opcionales porque si no me da un error
-// de compilacion que faltan request prompts en el sample
-action ValidatedArgs APICheckParams(optional DURATION duration, optional TIME time, optional DATE date, optional service service)
+// api call to validate arguments for a recurring volunteer request
+// saves parameters in session
+action ValidatedArgsRecurring APIValidateArgsRecurring(service service, DayOfWeek dow, TIME time, DURATION duration, DATE since, DATE until)

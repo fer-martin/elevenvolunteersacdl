@@ -22,11 +22,11 @@ const moment = require('moment-timezone');
  */
 const CheckParamsApiHandler = {
     canHandle(handlerInput) {
-        //ATENCION: Con los ACDL aparentemente le prefija el namespace a la api call
-        return util.isApiRequest(handlerInput, 'apis.APICheckParams');
+        //BUG: Con los ACDL aparentemente le prefija el namespace a la api call
+        return util.isApiRequest(handlerInput, 'apis.APIValidateArgsOnce');
     },
     handle(handlerInput) {
-        console.log("Api Request [APICheckParams]: ", JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
+        console.log("Api Request [APIValidateArgsOnce]: ", JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
 
         const slots = util.getAPISlotValues(handlerInput);
         const service = slots["service"].resolved;
@@ -57,6 +57,38 @@ const CheckParamsApiHandler = {
     }
 }
 
+const CheckParamsApiRecurringHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'apis.APIValidateArgsRecurring');
+    },
+    handle(handlerInput) {
+        console.log("Api Request [APIValidateArgsRecurring]: ", JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
+
+        const slots = util.getAPISlotValues(handlerInput);
+        const service = slots["service"].resolved;
+        const date = slots["since"].resolved;
+        const dow = slots["dow"].resolved;
+
+        const serviceid = slots["service"].id
+        let message = ""
+        if (serviceid == "65100") {
+            message = "This service is available only for blind families."
+        }
+
+        let params = {
+            service: service,
+            date: moment(date).locale('en').format('dddd, MMMM D'),
+            dow: dow,
+            status: 0,
+            message: message
+        };
+
+        return handlerInput.responseBuilder
+            .withApiResponse(params)
+            .withShouldEndSession(false)
+            .getResponse();
+    }
+}
 /**
  * API Handler for RecordColor API
  *
@@ -73,17 +105,8 @@ const RequestVolunteerApiHandler = {
     handle(handlerInput) {
         console.log("Api Request [APIRequestVolunteer]: ", JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
 
-        const slots = util.getAPISlotValues(handlerInput);
-        const service = slots["service"].id;
-        const date = slots["date"].resolved;
-        const time = slots["time"].resolved;
-        const duration = slots["duration"].resolved;
         const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         sessionAttributes.VolunteerRequest = {
-            service: service,
-            date: date,
-            time: time,
-            duration: duration,
             status: 0,
             message: ""
         };
@@ -203,6 +226,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         RequestVolunteerApiHandler,
         CheckParamsApiHandler,
+        CheckParamsApiRecurringHandler,
         FallbackIntentHandler,
         SessionEndedRequestHandler
     )

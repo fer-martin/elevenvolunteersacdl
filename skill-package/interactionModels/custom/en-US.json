@@ -154,6 +154,36 @@
             }
           ],
           "name": "service"
+        },
+        {
+          "name": "periodicity",
+          "values": [
+            {
+              "id": "once",
+              "name": {
+                "value": "once",
+                "synonyms": [
+                  "just once",
+                  "only once",
+                  "for one time",
+                  "only this time",
+                  "only one time",
+                  "one time only",
+                  "one time"
+                ]
+              }
+            },
+            {
+              "id": "recurring",
+              "name": {
+                "value": "recurring",
+                "synonyms": [
+                  "several times",
+                  "more than one time"
+                ]
+              }
+            }
+          ]
         }
       ],
       "modelConfiguration": {

@@ -5,24 +5,29 @@ import com.amazon.ask.types.builtins.AMAZON.DATE
 import com.amazon.ask.types.builtins.AMAZON.DURATION
 import com.amazon.ask.types.builtins.AMAZON.NUMBER
 import com.amazon.ask.types.builtins.AMAZON.TIME
+import com.amazon.ask.types.builtins.AMAZON.DayOfWeek
 import slotTypes.service
 
 /* API calls types */
 type VolunteerRequest {
-  DATE date
-  DURATION duration
-  service service
-  TIME time
   NUMBER status
   String message
 }
 
-type ValidatedArgs {
+type ValidatedArgsOnce {
   String service
   String date
   String start
   String end
   String duration
+  NUMBER status
+  String message
+}
+
+type ValidatedArgsRecurring {
+  String service
+  String date
+  String dayofweek
   NUMBER status
   String message
 }
@@ -42,6 +47,15 @@ type USetInformTimeRequestType {
 
 type USetInformDurationRequestType {
   DURATION duration
+}
+
+type USetInformDowRequestType {
+  DayOfWeek dow
+}
+
+type USetInformDowAndTimeRequestType {
+  DayOfWeek dow
+  TIME time
 }
 
 type USetRequestInformServiceAndDateType {
@@ -67,6 +81,17 @@ type USetRequestInformAllType {
   TIME time
 }
 
+/* For recurring */
+type  USetRequestRecurrInformServiceAndDow {
+  service service
+  DayOfWeek dow
+}
+
+type USetRequestRecurrInformServiceDowAndTime {
+  service service
+  DayOfWeek dow
+  TIME time
+}
 /* Dialog payloads types */
 type ConfirmApiType {
   DATE date
@@ -75,8 +100,21 @@ type ConfirmApiType {
   TIME time
 }
 
+type ConfirmApiRecurringType {
+  service service
+  DayOfWeek dow
+  TIME time
+  DURATION duration
+  DATE since
+  DATE until
+}
+
 type ValidatedConfirmApiType {
-  ValidatedArgs validated
+  ValidatedArgsOnce validated
+}
+
+type ValidatedConfirmRecurringApiType {
+  ValidatedArgsRecurring validated
 }
 
 type NotifyApiResponseType {

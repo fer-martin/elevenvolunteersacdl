@@ -9,6 +9,10 @@ import types.USetInformTimeRequestType
 import types.USetRequestInformServiceAndDateType
 import types.USetRequestInformAllType
 import types.USetRequestInformServiceDateAndTimeType
+import types.USetInformDowRequestType
+import types.USetInformDowAndTimeRequestType
+import types.USetRequestRecurrInformServiceAndDow
+import types.USetRequestRecurrInformServiceDowAndTime
 
 // Utterances for the several requests
 
@@ -76,6 +80,71 @@ USetRequestVolunteer3 = utterances<USetRequestInformServiceDateAndTimeType>(
   ]
 )
 
+// utterances for recurring requests
+USetRequestVolunteer4 = utterances<USetRequestRecurrInformServiceAndDow>(
+  samples = [
+    "i want  a volunteer for {service} every {dow}",
+    "i want  a volunteer for {service} for every {dow}",
+    "i want to request a volunteer for {service} every {dow}",
+    "i want to request a volunteer for {service} for every {dow}",
+    "i need  a volunteer for {service} every {dow}",
+    "i need  a volunteer for {service} for every {dow}",
+    "i need to request a volunteer for {service} every {dow}",
+    "i need to request a volunteer for {service} for every {dow}",
+    "find me a volunteer for {service} every {dow}",
+    "find me a volunteer for {service} for every {dow}",
+    "find a volunteer for {service} every {dow}",
+    "find a volunteer for {service} for every {dow}",
+    "i want  a volunteer  every {dow} for {service}",
+    "i want  a volunteer every {dow} for {service}",
+    "i want  a volunteer for every {dow} for {service}",
+    "i want to request a volunteer  every {dow} for {service}",
+    "i want to request a volunteer every {dow} for {service}",
+    "i want to request a volunteer for every {dow} for {service}",
+    "i need  a volunteer  every {dow} for {service}",
+    "i need  a volunteer every {dow} for {service}",
+    "i need  a volunteer for every {dow} for {service}",
+    "i need to request a volunteer  every {dow} for {service}",
+    "i need to request a volunteer every {dow} for {service}",
+    "i need to request a volunteer for every {dow} for {service}",
+    "find me a volunteer  every {dow} for {service}",
+    "find me a volunteer every {dow} for {service}",
+    "find me a volunteer for every {dow} for {service}",
+    "find a volunteer  every {dow} for {service}",
+    "find a volunteer every {dow} for {service}",
+    "find a volunteer for every {dow} for {service}"
+  ]
+)
+
+USetRequestVolunteer5 = utterances<USetInformDowRequestType>(
+  samples = [
+    "i want a volunteer every {dow}",
+    "i want a volunteer for every {dow}",
+    "i want to request a volunteer every {dow}",
+    "i want to request a volunteer for every {dow}",
+    "i need a volunteer every {dow}",
+    "i need a volunteer for every {dow}",
+    "i need to request a volunteer every {dow}",
+    "i need to request a volunteer for every {dow}",
+    "find a volunteer every {dow}",
+    "find a volunteer for every {dow}",
+    "find me a volunteer every {dow}",
+    "find me a volunteer for every {dow}"
+  ]
+)
+
+USetRequestVolunteer6 = utterances<USetRequestRecurrInformServiceDowAndTime>(
+  samples = [
+    "get me a volunteer for {service} every {dow} at {time}",
+    "find a volunteer for {service} every {dow} at {time}",
+    "I want a volunteer for {service} at {time} every {dow}",
+    "I want a volunteer for {service} at {time} every {dow}",
+    "i need a volunteer for {service} for every {dow} at {time}",
+    "I want to request a volunteer for {service} for every {dow} at {time}"
+  ]
+)
+
+
 // utterances for informing the arguments
 
 USetInformDate = utterances<USetInformDateRequestType>(
@@ -111,6 +180,40 @@ USetInformTimeAndDuration = utterances<USetInformTimeAndDurationRequestType>(
   samples = [
     "for {duration} at {time}",
     "at {time} for {duration}"
+  ]
+)
+
+// utterances for informing the arguments of recurring requests
+
+USetInformDow = utterances<USetInformDowRequestType>(
+  samples = [
+    "every {dow}",
+    "on every {dow}",
+    "on {dow}",
+    "{dow}"
+  ]
+)
+
+USetInformDowAndTime = utterances<USetInformDowAndTimeRequestType>(
+  samples = [
+    "every {dow} at {time}",
+    "on every {dow} at {time}",
+    "on {dow} at {time}",
+    "{dow} at {time}"
+  ]
+)
+
+USetInformDateSince = utterances<USetInformDateRequestType>(
+  samples = [
+    "since {date}",
+    "{date}"
+  ]
+)
+
+USetInformDateUntil = utterances<USetInformDateRequestType>(
+  samples = [
+    "until {date}",
+    "{date}"
   ]
 )
 

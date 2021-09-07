@@ -1,7 +1,8 @@
 namespace dialogs
 
 import apis.APIRequestVolunteer
-import apis.APICheckParams
+import apis.APIValidateArgsOnce
+import apis.APIValidateArgsRecurring
 import com.amazon.alexa.ask.conversations.Affirm
 import com.amazon.alexa.ask.conversations.Bye
 import com.amazon.alexa.ask.conversations.ConfirmAction
@@ -25,9 +26,15 @@ import prompts.RequestDatePrompt
 import prompts.RequestDurationPrompt
 import prompts.RequestServicePrompt
 import prompts.RequestTimePrompt
+import prompts.RequestDateSincePrompt
+import prompts.RequestDateUntilPrompt
+import prompts.RequestDowPrompt
 import types.ConfirmApiType
+import types.ConfirmApiRecurringType
 import types.ValidatedConfirmApiType
-import types.ValidatedArgs
+import types.ValidatedConfirmRecurringApiType
+import types.ValidatedArgsOnce
+import types.ValidatedArgsRecurring
 import types.NotifyApiResponseType
 import utterances.USetAffirm
 import utterances.USetDeny
@@ -40,13 +47,18 @@ import utterances.USetRequestVolunteer0
 import utterances.USetRequestVolunteer1
 import utterances.USetRequestVolunteer2
 import utterances.USetRequestVolunteer3
+import utterances.USetRequestVolunteer4
+import utterances.USetRequestVolunteer5
+import utterances.USetRequestVolunteer6
+import utterances.USetInformDateSince
+import utterances.USetInformDateUntil
 
 // Probemos de hacer un modulo reusable para la respuesta de la api
 
-dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
+dialog Nothing dialog_APICallOnce(ConfirmApiType args) {
   //El usuario confirma los parametros
   sample {
-    validated = APICheckParams(
+    validated = APIValidateArgsOnce(
       date = args.date,
       duration = args.duration,
       service = args.service,
@@ -57,7 +69,7 @@ dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
     response(
       act = Notify {
         success = true,
-        actionName = APICheckParams
+        actionName = APIValidateArgsOnce
       },
       payload = ValidatedConfirmApiType {
         validated = validated
@@ -66,25 +78,7 @@ dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
         apla = ConfirmRequestPrompt
       },
       nextAct = Offer {
-        actionName = APIRequestVolunteer,
-        carryOverArguments = [ 
-          CarryOverArgument {
-            argument = APIRequestVolunteer.arguments.date, 
-            source = args.date
-          },
-          CarryOverArgument {
-            argument = APIRequestVolunteer.arguments.duration, 
-            source = args.duration
-          },
-          CarryOverArgument {
-            argument = APIRequestVolunteer.arguments.service, 
-            source = args.service
-          },
-          CarryOverArgument {
-            argument = APIRequestVolunteer.arguments.time, 
-            source = args.time
-          }
-        ]
+        actionName = APIRequestVolunteer
       }
     )
     //yes!
@@ -93,12 +87,7 @@ dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
       event = USetAffirm
     )
     //... does the api call requesting the volunteer to lambda ...
-    result = APIRequestVolunteer(
-      date = args.date,
-      duration = args.duration,
-      service = args.service,
-      time = args.time
-    )
+    result = APIRequestVolunteer()
 
     if (result.status == 0) {
       // la llamada a la API anduvo ok!
@@ -134,7 +123,7 @@ dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
   }
   //El usuario no confirma los parametros
   sample {
-    validated = APICheckParams(
+    validated = APIValidateArgsOnce(
       date = args.date,
       duration = args.duration,
       service = args.service,
@@ -145,7 +134,7 @@ dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
     response(
       act = Notify {
         success = true,
-        actionName = APICheckParams
+        actionName = APIValidateArgsOnce
       },
       payload = ValidatedConfirmApiType {
         validated = validated
@@ -154,25 +143,7 @@ dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
         apla = ConfirmRequestPrompt
       },
       nextAct = Offer {
-        actionName = APIRequestVolunteer,
-        carryOverArguments = [ 
-          CarryOverArgument {
-            argument = APIRequestVolunteer.arguments.date, 
-            source = args.date
-          },
-          CarryOverArgument {
-            argument = APIRequestVolunteer.arguments.duration, 
-            source = args.duration
-          },
-          CarryOverArgument {
-            argument = APIRequestVolunteer.arguments.service, 
-            source = args.service
-          },
-          CarryOverArgument {
-            argument = APIRequestVolunteer.arguments.time, 
-            source = args.time
-          }
-        ]
+        actionName = APIRequestVolunteer
       }
     )
     //nope!
@@ -190,7 +161,7 @@ dialog Nothing ThisIsTheAPICall(ConfirmApiType args) {
   }
 }
 
-dialog Nothing dialog_RequestVolunteer() {
+dialog Nothing dialog_RequestVolunteerOnce() {
   /* Requests a volunteer, initial utterance has no parameters */
   sample {
     //i need a volunteer
@@ -202,7 +173,7 @@ dialog Nothing dialog_RequestVolunteer() {
     response(
       act = Request {
         arguments = [
-          APIRequestVolunteer.arguments.service
+          APIValidateArgsOnce.arguments.service
         ]
       },
       response = MultiModalResponse {
@@ -218,7 +189,7 @@ dialog Nothing dialog_RequestVolunteer() {
     response(
       act = Request {
         arguments = [
-          APIRequestVolunteer.arguments.date
+          APIValidateArgsOnce.arguments.date
         ]
       },
       response = MultiModalResponse {
@@ -234,7 +205,7 @@ dialog Nothing dialog_RequestVolunteer() {
     response(
       act = Request {
         arguments = [
-          APIRequestVolunteer.arguments.time
+          APIValidateArgsOnce.arguments.time
         ]
       },
       response = MultiModalResponse {
@@ -250,7 +221,7 @@ dialog Nothing dialog_RequestVolunteer() {
     response(
       act = Request {
         arguments = [
-          APIRequestVolunteer.arguments.duration
+          APIValidateArgsOnce.arguments.duration
         ]
       },
       response = MultiModalResponse {
@@ -270,7 +241,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestServicePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.service
+            APIValidateArgsOnce.arguments.service
           ]
         }
       ]
@@ -282,7 +253,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestDatePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.date
+            APIValidateArgsOnce.arguments.date
           ]
         }
       ]
@@ -294,7 +265,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestTimePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.time
+            APIValidateArgsOnce.arguments.time
           ]
         }
       ]
@@ -306,12 +277,12 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestDurationPrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.duration
+            APIValidateArgsOnce.arguments.duration
           ]
         }
       ]
     )    
-    ThisIsTheAPICall(args = ConfirmApiType {
+    dialog_APICallOnce(args = ConfirmApiType {
       date = USetInformDateRequest.date,
       duration = USetInformDurationRequest.duration,
       service = USetInformServiceRequest.service,
@@ -329,7 +300,7 @@ dialog Nothing dialog_RequestVolunteer() {
     response(
       act = Request {
         arguments = [
-          APIRequestVolunteer.arguments.time
+          APIValidateArgsOnce.arguments.time
         ]
       },
       response = MultiModalResponse {
@@ -349,7 +320,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestServicePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.service
+            APIValidateArgsOnce.arguments.service
           ]
         }
       ]
@@ -361,7 +332,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestDatePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.date
+            APIValidateArgsOnce.arguments.date
           ]
         }
       ]
@@ -373,7 +344,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestTimePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.time
+            APIValidateArgsOnce.arguments.time
           ]
         }
       ]
@@ -385,12 +356,12 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestDurationPrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.duration
+            APIValidateArgsOnce.arguments.duration
           ]
         }
       ]
     )
-    ThisIsTheAPICall(args = ConfirmApiType {
+    dialog_APICallOnce(args = ConfirmApiType {
       date = USetRequestVolunteer1Request.date,
       duration = USetInformTimeAndDurationRequest.duration,
       service = USetRequestVolunteer1Request.service,
@@ -412,7 +383,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestServicePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.service
+            APIValidateArgsOnce.arguments.service
           ]
         }
       ]
@@ -424,7 +395,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestDatePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.date
+            APIValidateArgsOnce.arguments.date
           ]
         }
       ]
@@ -436,7 +407,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestTimePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.time
+            APIValidateArgsOnce.arguments.time
           ]
         }
       ]
@@ -448,12 +419,12 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestDurationPrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.duration
+            APIValidateArgsOnce.arguments.duration
           ]
         }
       ]
     )
-    ThisIsTheAPICall(args = ConfirmApiType {
+    dialog_APICallOnce(args = ConfirmApiType {
       date = USetRequestVolunteer2Request.date,
       duration = USetRequestVolunteer2Request.duration,
       service = USetRequestVolunteer2Request.service,
@@ -471,7 +442,7 @@ dialog Nothing dialog_RequestVolunteer() {
     response(
       act = Request {
         arguments = [
-          APIRequestVolunteer.arguments.duration
+          APIValidateArgsOnce.arguments.duration
         ]
       },
       response = MultiModalResponse {
@@ -491,7 +462,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestServicePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.service
+            APIValidateArgsOnce.arguments.service
           ]
         }
       ]
@@ -503,7 +474,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestDatePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.date
+            APIValidateArgsOnce.arguments.date
           ]
         }
       ]
@@ -515,7 +486,7 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestTimePrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.time
+            APIValidateArgsOnce.arguments.time
           ]
         }
       ]
@@ -527,16 +498,541 @@ dialog Nothing dialog_RequestVolunteer() {
             apla = RequestDurationPrompt
           },
           arguments = [
-            APIRequestVolunteer.arguments.duration
+            APIValidateArgsOnce.arguments.duration
           ]
         }
       ]
     )
-    ThisIsTheAPICall(args = ConfirmApiType {
+    dialog_APICallOnce(args = ConfirmApiType {
       date = USetRequestVolunteer3Request.date,
       duration = USetInformDurationRequest.duration,
       service = USetRequestVolunteer3Request.service,
       time = USetRequestVolunteer3Request.time
+    })
+  }
+}
+
+dialog Nothing dialog_APICallRecurring(ConfirmApiRecurringType args) {
+  sample {
+    validated = APIValidateArgsRecurring(
+      service = args.service,
+      dow = args.dow,
+      time = args.time,
+      duration = args.duration,
+      since = args.since,
+      until = args.until
+    )
+
+    //ok i will ask for a volunteer blah blah blah
+    response(
+      act = Notify {
+        success = true,
+        actionName = APIValidateArgsRecurring
+      },
+      payload = ValidatedConfirmRecurringApiType {
+        validated = validated
+      },
+      response = MultiModalResponse {
+        apla = ConfirmRequestPrompt
+      },
+      nextAct = Offer {
+        actionName = APIRequestVolunteer
+      }
+    )
+    //yes!
+    expect(
+      act = Invoke,
+      event = USetAffirm
+    )
+    //... does the api call requesting the volunteer to lambda ...
+    result = APIRequestVolunteer()
+
+    if (result.status == 0) {
+      // la llamada a la API anduvo ok!
+      //i have requested the volunteer!
+      response(
+        act = Notify {
+          success = true,
+          actionName = APIRequestVolunteer
+        },
+        payload = NotifyApiResponseType {
+          volunteerRequest = result
+        },
+        response = MultiModalResponse {
+          apla = RequestConfirmedPrompt
+        }
+      )
+    } else {
+      //hubo un error, llamo a un response de error
+      //sorry!
+      response(
+        act = Notify {
+          success = false,
+          actionName = APIRequestVolunteer
+        },
+        payload = NotifyApiResponseType {
+          volunteerRequest = result
+        },
+        response = MultiModalResponse {
+          apla = RequestRejectedPrompt
+        }
+      )
+    }
+  }
+}
+
+dialog Nothing dialog_RequestVolunteerRecurring() {
+  sample {
+    //i want  a volunteer for {service} every {dow}
+    ServiceAndDow = expect(
+      act = Invoke,
+      event = USetRequestVolunteer4
+    )
+    //at what time?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.time
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestTimePrompt
+      }
+    )
+    //at ten a m
+    Time = expect(
+      act = Inform,
+      event = USetInformTime
+    )
+    //for how long?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.duration
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDurationPrompt
+      }
+    )
+    //one hour
+    Duration = expect(
+      act = Inform,
+      event = USetInformDuration
+    )
+    //since what day?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.since
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDateSincePrompt
+      }
+    )
+    DateSince = expect(
+      act = Inform,
+      event = USetInformDateSince
+    )
+    //until what day?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.until
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDateUntilPrompt
+      }
+    )
+    DateUntil = expect(
+      act = Inform,
+      event = USetInformDateUntil
+    )
+    //let's make sure all the arguments are in
+    ensure( //service
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestServicePrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.service
+          ]
+        }
+      ]
+    )
+    ensure( //since
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDateSincePrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.since
+          ]
+        }
+      ]
+    )
+    ensure( //until
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDateUntilPrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.until
+          ]
+        }
+      ]
+    )
+    ensure( //dow
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDowPrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.dow
+          ]
+        }
+      ]
+    )
+    ensure( //time
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestTimePrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.time
+          ]
+        }
+      ]
+    )
+    ensure( //duration
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDurationPrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.duration
+          ]
+        }
+      ]
+    )
+    dialog_APICallRecurring(args = ConfirmApiRecurringType {
+      service = ServiceAndDow.service,
+      dow = ServiceAndDow.dow,
+      time = Time.time,
+      duration = Duration.duration,
+      since = DateSince.date,
+      until = DateUntil.date
+    })
+  }
+
+  sample {
+    //i want  a volunteer every {dow}
+    Dow = expect(
+      act = Invoke,
+      event = USetRequestVolunteer5
+    )
+    //for what service?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.service
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestServicePrompt
+      }
+    )
+    //a guide dog
+    Service = expect(
+      act = Inform,
+      event = USetInformService
+    )
+    //at what time?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.time
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestTimePrompt
+      }
+    )
+    //at ten a m
+    Time = expect(
+      act = Inform,
+      event = USetInformTime
+    )
+    //for how long?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.duration
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDurationPrompt
+      }
+    ) 
+    //one hour
+    Duration = expect(
+      act = Inform,
+      event = USetInformDuration
+    )
+    //since what day?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.since
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDateSincePrompt
+      }
+    )
+    DateSince = expect(
+      act = Inform,
+      event = USetInformDateSince
+    )
+    //until what day?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.until
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDateUntilPrompt
+      }
+    )
+    DateUntil = expect(
+      act = Inform,
+      event = USetInformDateUntil
+    )
+    //let's make sure all the arguments are in
+    ensure( //service
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestServicePrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.service
+          ]
+        }
+      ]
+    )
+    ensure( //since
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDateSincePrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.since
+          ]
+        }
+      ]
+    )
+    ensure( //until
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDateUntilPrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.until
+          ]
+        }
+      ]
+    )
+    ensure( //dow
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDowPrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.dow
+          ]
+        }
+      ]
+    )
+    ensure( //time
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestTimePrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.time
+          ]
+        }
+      ]
+    )
+    ensure( //duration
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDurationPrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.duration
+          ]
+        }
+      ]
+    )
+    dialog_APICallRecurring(args = ConfirmApiRecurringType {
+      service = Service.service,
+      dow = Dow.dow,
+      time = Time.time,
+      duration = Duration.duration,
+      since = DateSince.date,
+      until = DateUntil.date
+    })
+  }
+
+  sample {
+    //I want a volunteer for {service} at {time} every {dow}
+    ServiceDowTime = expect(
+      act = Invoke,
+      event = USetRequestVolunteer6
+    )
+    //for how long?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.duration
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDurationPrompt
+      }
+    )
+    //one hour
+    Duration = expect(
+      act = Inform,
+      event = USetInformDuration
+    )
+    //since what day?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.since
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDateSincePrompt
+      }
+    )
+    DateSince = expect(
+      act = Inform,
+      event = USetInformDateSince
+    )
+    //until what day?
+    response(
+      act = Request {
+        arguments = [
+          APIValidateArgsRecurring.arguments.until
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDateUntilPrompt
+      }
+    )
+    DateUntil = expect(
+      act = Inform,
+      event = USetInformDateUntil
+    )
+
+    //let's make sure all the arguments are in
+    ensure( //service
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestServicePrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.service
+          ]
+        }
+      ]
+    )
+    ensure( //since
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDateSincePrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.since
+          ]
+        }
+      ]
+    )
+    ensure( //until
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDateUntilPrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.until
+          ]
+        }
+      ]
+    )
+    ensure( //dow
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDowPrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.dow
+          ]
+        }
+      ]
+    )
+    ensure( //time
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestTimePrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.time
+          ]
+        }
+      ]
+    )
+    ensure( //duration
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDurationPrompt
+          },
+          arguments = [
+            APIValidateArgsRecurring.arguments.duration
+          ]
+        }
+      ]
+    )
+    dialog_APICallRecurring(args = ConfirmApiRecurringType {
+      service = ServiceDowTime.service,
+      dow = ServiceDowTime.dow,
+      time = ServiceDowTime.time,
+      duration = Duration.duration,
+      since = DateSince.date,
+      until = DateUntil.date
     })
   }
 }
