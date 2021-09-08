@@ -148,7 +148,7 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       }
     )
     //a guide dog
-    USetInformServiceRequest = expect(
+    ret1 = expect(
       act = Inform,
       event = USetInformService
     )
@@ -164,7 +164,7 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       }
     )
     //tomorow
-    USetInformDateRequest = expect(
+    ret2 = expect(
       act = Inform,
       event = USetInformDate
     )
@@ -180,7 +180,7 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       }
     )
     //at ten a m
-    USetInformTimeRequest = expect(
+    ret3 = expect(
       act = Inform,
       event = USetInformTime
     )
@@ -196,7 +196,7 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       }
     )
     //one hour
-    USetInformDurationRequest = expect(
+    ret4 = expect(
       act = Inform,
       event = USetInformDuration
     )
@@ -250,16 +250,16 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       ]
     )    
     dialog_APICallOnce(args = ConfirmApiType {
-      date = USetInformDateRequest.date,
-      duration = USetInformDurationRequest.duration,
-      service = USetInformServiceRequest.service,
-      time = USetInformTimeRequest.time
+      date = ret2.date,
+      duration = ret4.duration,
+      service = ret1.service,
+      time = ret3.time
     })
   }
   /* Requests volunteer with service and date */
   sample {
     //i need a guide dog tomorrow
-    USetRequestVolunteer1Request = expect(
+    ret1 = expect(
       act = Invoke,
       event = USetRequestVolunteer1
     )
@@ -275,7 +275,7 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       }
     )
     //at seven p m for one hour
-    USetInformTimeAndDurationRequest = expect(
+    ret2 = expect(
       act = Inform,
       event = USetInformTimeAndDuration
     )
@@ -329,16 +329,16 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       ]
     )
     dialog_APICallOnce(args = ConfirmApiType {
-      date = USetRequestVolunteer1Request.date,
-      duration = USetInformTimeAndDurationRequest.duration,
-      service = USetRequestVolunteer1Request.service,
-      time = USetInformTimeAndDurationRequest.time
+      date = ret1.date,
+      duration = ret2.duration,
+      service = ret1.service,
+      time = ret2.time
     })
   }
   /* Requests volunteer with the four parameters */
   sample {
     // i need a guide dog tomorrow at seven a m for one hour
-    USetRequestVolunteer2Request = expect(
+    ret1 = expect(
       act = Invoke,
       event = USetRequestVolunteer2
     )
@@ -392,16 +392,16 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       ]
     )
     dialog_APICallOnce(args = ConfirmApiType {
-      date = USetRequestVolunteer2Request.date,
-      duration = USetRequestVolunteer2Request.duration,
-      service = USetRequestVolunteer2Request.service,
-      time = USetRequestVolunteer2Request.time
+      date = ret1.date,
+      duration = ret1.duration,
+      service = ret1.service,
+      time = ret1.time
     })
   }
   /* Requests volunteers with service, date and time */
   sample {
     // i need a volunteer with a guide dog tomorrow at seven a m
-    USetRequestVolunteer3Request = expect(
+    ret1 = expect(
       act = Invoke,
       event = USetRequestVolunteer3
     )
@@ -417,7 +417,7 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       }
     )
     // one hour
-    USetInformDurationRequest = expect(
+    ret2 = expect(
       act = Inform,
       event = USetInformDuration
     )
@@ -471,10 +471,10 @@ dialog Nothing dialog_RequestVolunteerOnce() {
       ]
     )
     dialog_APICallOnce(args = ConfirmApiType {
-      date = USetRequestVolunteer3Request.date,
-      duration = USetInformDurationRequest.duration,
-      service = USetRequestVolunteer3Request.service,
-      time = USetRequestVolunteer3Request.time
+      date = ret1.date,
+      duration = ret2.duration,
+      service = ret1.service,
+      time = ret1.time
     })
   }
 }
@@ -551,7 +551,7 @@ dialog Nothing dialog_APICallRecurring(ConfirmApiRecurringType args) {
 dialog Nothing dialog_RequestVolunteerRecurring() {
   sample {
     //i want  a volunteer for {service} every {dow}
-    ServiceAndDow = expect(
+    ret1 = expect(
       act = Invoke,
       event = USetRequestVolunteer4
     )
@@ -567,7 +567,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       }
     )
     //at ten a m
-    Time = expect(
+    ret2 = expect(
       act = Inform,
       event = USetInformTime
     )
@@ -583,7 +583,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       }
     )
     //one hour
-    Duration = expect(
+    ret3 = expect(
       act = Inform,
       event = USetInformDuration
     )
@@ -598,7 +598,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         apla = RequestDateSincePrompt
       }
     )
-    DateSince = expect(
+    ret4 = expect(
       act = Inform,
       event = USetInformDateSince
     )
@@ -613,7 +613,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         apla = RequestDateUntilPrompt
       }
     )
-    DateUntil = expect(
+    ret5 = expect(
       act = Inform,
       event = USetInformDateUntil
     )
@@ -691,18 +691,18 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       ]
     )
     dialog_APICallRecurring(args = ConfirmApiRecurringType {
-      service = ServiceAndDow.service,
-      dow = ServiceAndDow.dow,
-      time = Time.time,
-      duration = Duration.duration,
-      since = DateSince.date,
-      until = DateUntil.date
+      service = ret1.service,
+      dow = ret1.dow,
+      time = ret2.time,
+      duration = ret3.duration,
+      since = ret4.date,
+      until = ret5.date
     })
   }
 
   sample {
     //i want  a volunteer every {dow}
-    Dow = expect(
+    ret1 = expect(
       act = Invoke,
       event = USetRequestVolunteer5
     )
@@ -718,7 +718,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       }
     )
     //a guide dog
-    Service = expect(
+    ret2 = expect(
       act = Inform,
       event = USetInformService
     )
@@ -734,7 +734,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       }
     )
     //at ten a m
-    Time = expect(
+    ret3 = expect(
       act = Inform,
       event = USetInformTime
     )
@@ -750,7 +750,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       }
     ) 
     //one hour
-    Duration = expect(
+    ret4 = expect(
       act = Inform,
       event = USetInformDuration
     )
@@ -765,7 +765,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         apla = RequestDateSincePrompt
       }
     )
-    DateSince = expect(
+    ret5 = expect(
       act = Inform,
       event = USetInformDateSince
     )
@@ -780,7 +780,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         apla = RequestDateUntilPrompt
       }
     )
-    DateUntil = expect(
+    ret6 = expect(
       act = Inform,
       event = USetInformDateUntil
     )
@@ -858,18 +858,18 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       ]
     )
     dialog_APICallRecurring(args = ConfirmApiRecurringType {
-      service = Service.service,
-      dow = Dow.dow,
-      time = Time.time,
-      duration = Duration.duration,
-      since = DateSince.date,
-      until = DateUntil.date
+      service = ret2.service,
+      dow = ret1.dow,
+      time = ret3.time,
+      duration = ret4.duration,
+      since = ret5.date,
+      until = ret6.date
     })
   }
 
   sample {
     //I want a volunteer for {service} at {time} every {dow}
-    ServiceDowTime = expect(
+    ret1 = expect(
       act = Invoke,
       event = USetRequestVolunteer6
     )
@@ -885,7 +885,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       }
     )
     //one hour
-    Duration = expect(
+    ret2 = expect(
       act = Inform,
       event = USetInformDuration
     )
@@ -900,7 +900,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         apla = RequestDateSincePrompt
       }
     )
-    DateSince = expect(
+    ret3 = expect(
       act = Inform,
       event = USetInformDateSince
     )
@@ -915,7 +915,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         apla = RequestDateUntilPrompt
       }
     )
-    DateUntil = expect(
+    ret4 = expect(
       act = Inform,
       event = USetInformDateUntil
     )
@@ -994,12 +994,12 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       ]
     )
     dialog_APICallRecurring(args = ConfirmApiRecurringType {
-      service = ServiceDowTime.service,
-      dow = ServiceDowTime.dow,
-      time = ServiceDowTime.time,
-      duration = Duration.duration,
-      since = DateSince.date,
-      until = DateUntil.date
+      service = ret1.service,
+      dow = ret1.dow,
+      time = ret1.time,
+      duration = ret2.duration,
+      since = ret3.date,
+      until = ret4.date
     })
   }
 }

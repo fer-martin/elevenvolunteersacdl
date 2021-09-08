@@ -34,48 +34,48 @@ type ValidatedArgsRecurring {
 }
 
 /* Utterance Sets Slots types */
-type USetInformServiceRequestType {
+type ServiceType {
   service service
 }
 
-type USetInformDateRequestType {
+type DateType {
   DATE date
 }
 
-type USetInformTimeRequestType {
+type TimeType {
   TIME time
 }
 
-type USetInformDurationRequestType {
+type DurationType {
   DURATION duration
 }
 
-type USetInformDowRequestType {
+type DowType {
   DayOfWeek dow
 }
 
-type USetInformDowAndTimeRequestType {
+type DowAndTimeType {
   DayOfWeek dow
   TIME time
 }
 
-type USetRequestInformServiceAndDateType {
+type ServiceAndDateType {
   DATE date
   service service
 }
 
-type USetInformTimeAndDurationRequestType {
+type DurationAndTimeType {
   DURATION duration
   TIME time
 }
 
-type USetRequestInformServiceDateAndTimeType {
+type ServiceDateAndTimeType {
   DATE date
   service service
   TIME time
 }
 
-type USetRequestInformAllType {
+type ServiceDateTimeAndDurationType {
   DATE date
   DURATION duration
   service service
@@ -83,12 +83,12 @@ type USetRequestInformAllType {
 }
 
 /* For recurring */
-type  USetRequestRecurrInformServiceAndDow {
+type  ServiceAndDowType {
   service service
   DayOfWeek dow
 }
 
-type USetRequestRecurrInformServiceDowAndTime {
+type ServiceDowAndTimeType {
   service service
   DayOfWeek dow
   TIME time
