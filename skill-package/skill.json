@@ -9,14 +9,23 @@
             "hello",
             "help"
           ],
+          "keywords": [
+            "volunteers"
+          ],
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/1b82/3d7c48b3f53f4a169ba3baaa95379334/APP_ICON_LARGE?versionId=8xwp8kQnMnGbnV4LUqya9zhIYwt1vMu6&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210908T001138Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QMBDMF43H%2F20210908%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=680be37d1e5fd02a20f6a4bf5deb05c16df610aa74bc491a18477a21c43bac7c",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/f8bc/93392abf90c6409790d4d18e2e04e422/APP_ICON?versionId=BdgSIfJ9lwf9sz6LcYyqGnz126qrG1I_&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210908T001138Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QMBDMF43H%2F20210908%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=b6e4ea23cb7f34884dc7664990be81d81ce1fdce90234b0817432e2ec96493da",
           "name": "Eleven Volunteers ACDL",
           "description": "Sample Full Description"
         }
       },
       "isAvailableWorldwide": true,
       "testingInstructions": "Sample Testing Instructions.",
-      "category": "KNOWLEDGE_AND_TRIVIA",
-      "distributionCountries": []
+      "category": "ORGANIZERS_AND_ASSISTANTS",
+      "distributionCountries": [],
+      "automaticDistribution": {
+        "isActive": false
+      },
+      "distributionMode": "PUBLIC"
     },
     "apis": {
       "custom": {
@@ -35,6 +44,16 @@
         }
       }
     },
-    "manifestVersion": "1.0"
+    "manifestVersion": "1.0",
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "containsAds": false,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "locales": {
+        "en-US": {}
+      },
+      "usesPersonalInfo": false
+    }
   }
 }
