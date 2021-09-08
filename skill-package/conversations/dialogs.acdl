@@ -38,8 +38,8 @@ dialog Nothing dialog_APICallOnce(ConfirmApiType args) {
         success = true,
         actionName = APIValidateArgsOnce
       },
-      payload = ValidatedConfirmApiType {
-        validated = validated
+      payload = NotifyApiResponseType {
+        statusResponse = validated
       },
       response = MultiModalResponse {
         apla = ConfirmRequestPrompt
@@ -65,7 +65,7 @@ dialog Nothing dialog_APICallOnce(ConfirmApiType args) {
           actionName = APIRequestVolunteer
         },
         payload = NotifyApiResponseType {
-          volunteerRequest = result
+          statusResponse = result
         },
         response = MultiModalResponse {
           apla = RequestConfirmedPrompt
@@ -80,7 +80,7 @@ dialog Nothing dialog_APICallOnce(ConfirmApiType args) {
           actionName = APIRequestVolunteer
         },
         payload = NotifyApiResponseType {
-          volunteerRequest = result
+          statusResponse = result
         },
         response = MultiModalResponse {
           apla = RequestRejectedPrompt
@@ -103,8 +103,8 @@ dialog Nothing dialog_APICallOnce(ConfirmApiType args) {
         success = true,
         actionName = APIValidateArgsOnce
       },
-      payload = ValidatedConfirmApiType {
-        validated = validated
+      payload = NotifyApiResponseType {
+        statusResponse = validated
       },
       response = MultiModalResponse {
         apla = ConfirmRequestPrompt
@@ -496,8 +496,8 @@ dialog Nothing dialog_APICallRecurring(ConfirmApiRecurringType args) {
         success = true,
         actionName = APIValidateArgsRecurring
       },
-      payload = ValidatedConfirmRecurringApiType {
-        validated = validated
+      payload = NotifyApiResponseType {
+        statusResponse = validated
       },
       response = MultiModalResponse {
         apla = ConfirmRequestPrompt
@@ -523,7 +523,7 @@ dialog Nothing dialog_APICallRecurring(ConfirmApiRecurringType args) {
           actionName = APIRequestVolunteer
         },
         payload = NotifyApiResponseType {
-          volunteerRequest = result
+          statusResponse = result
         },
         response = MultiModalResponse {
           apla = RequestConfirmedPrompt
@@ -538,7 +538,7 @@ dialog Nothing dialog_APICallRecurring(ConfirmApiRecurringType args) {
           actionName = APIRequestVolunteer
         },
         payload = NotifyApiResponseType {
-          volunteerRequest = result
+          statusResponse = result
         },
         response = MultiModalResponse {
           apla = RequestRejectedPrompt

@@ -10,25 +10,7 @@ import com.amazon.ask.types.builtins.AMAZON.DayOfWeek
 import slotTypes.*
 
 /* API calls types */
-type VolunteerRequest {
-  Number status
-  String message
-}
-
-type ValidatedArgsOnce {
-  String service
-  String date
-  String start
-  String end
-  String duration
-  Number status
-  String message
-}
-
-type ValidatedArgsRecurring {
-  String service
-  String date
-  String dayofweek
+type StatusResponseType {
   Number status
   String message
 }
@@ -110,14 +92,6 @@ type ConfirmApiRecurringType {
   DATE until
 }
 
-type ValidatedConfirmApiType {
-  ValidatedArgsOnce validated
-}
-
-type ValidatedConfirmRecurringApiType {
-  ValidatedArgsRecurring validated
-}
-
 type NotifyApiResponseType {
-  VolunteerRequest volunteerRequest
+  StatusResponseType statusResponse
 }

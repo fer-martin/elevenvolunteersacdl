@@ -33,19 +33,15 @@ const CheckParamsApiHandler = {
         const date = slots["date"].resolved;
         const time = slots["time"].resolved;
         const duration = slots["duration"].resolved;
-
         const serviceid = slots["service"].id
-        let message = ""
+
+        let message = `I will ask for a volunteer for ${service} on ${moment(date).locale('en').format('dddd, MMMM D')}, from ${moment('2000-01-01T' + time).locale('en').format('h A')} until ${moment('2000-01-01T' + time).add(moment.duration(duration)).locale('en').format('h A')}.`
+
         if (serviceid == "65100") {
-            message = "This service is available only for blind families."
+            message += " This service is available only for blind families."
         }
 
         let params = {
-            service: service,
-            date: moment(date).locale('en').format('dddd, MMMM D'),
-            start: moment('2000-01-01T' + time).locale('en').format('h A'),
-            end: moment('2000-01-01T' + time).add(moment.duration(duration)).locale('en').format('h A'),
-            duration: moment.duration(duration).locale('en').humanize(),
             status: 0,
             message: message
         };
@@ -64,21 +60,23 @@ const CheckParamsApiRecurringHandler = {
     handle(handlerInput) {
         console.log("Api Request [APIValidateArgsRecurring]: ", JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
 
+
         const slots = util.getAPISlotValues(handlerInput);
         const service = slots["service"].resolved;
-        const date = slots["since"].resolved;
         const dow = slots["dow"].resolved;
-
+        const time = slots["time"].resolved;
+        const duration = slots["duration"].resolved;
+        const since = slots["since"].resolved;
+        const until = slots["until"].resolved;
         const serviceid = slots["service"].id
-        let message = ""
+
+        let message = `I will ask for a volunteer for ${service} every ${dow} from ${moment('2000-01-01T' + time).locale('en').format('h A')} until ${moment('2000-01-01T' + time).add(moment.duration(duration)).locale('en').format('h A')}, starting on ${moment(since).locale('en').format('dddd, MMMM D')}, until ${moment(until).locale('en').format('dddd, MMMM D')}.`
+
         if (serviceid == "65100") {
             message = "This service is available only for blind families."
         }
 
         let params = {
-            service: service,
-            date: moment(date).locale('en').format('dddd, MMMM D'),
-            dow: dow,
             status: 0,
             message: message
         };
@@ -106,52 +104,23 @@ const RequestVolunteerApiHandler = {
         console.log("Api Request [APIRequestVolunteer]: ", JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
 
         const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        sessionAttributes.VolunteerRequest = {
+        sessionAttributes.StatusResponseType = {
             status: 0,
             message: ""
         };
         //let's randomize the status!
         if (Math.random() > 0.5) {
-            sessionAttributes.VolunteerRequest.status = 1
-            sessionAttributes.VolunteerRequest.message = "The service overlaps."
+            sessionAttributes.StatusResponseType.status = 1
+            sessionAttributes.StatusResponseType.message = "The service overlaps."
         }
 
         return handlerInput.responseBuilder
-            .withApiResponse(sessionAttributes.VolunteerRequest)
+            .withApiResponse(sessionAttributes.StatusResponseType)
             .withShouldEndSession(false)
             .getResponse();
     }
 }
 
-/**
- * API Handler for GetFavoriteColor API
- *
- * @param handlerInput
- * @returns API response object
- *
- * See https://developer.amazon.com/en-US/docs/alexa/conversations/handle-api-calls.html
- */
-const GetFavoriteColorApiHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'GetFavoriteColor');
-    },
-    handle(handlerInput) {
-        console.log("Api Request [GetFavoriteColor]: ", JSON.stringify(handlerInput.requestEnvelope.request, null, 2));
-
-        // Get the favorite color from the session
-        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        if (sessionAttributes.favoriteColor) {
-            var color = sessionAttributes.favoriteColor;
-        }
-
-        return handlerInput.responseBuilder
-            .withApiResponse({
-                color: color
-            })
-            .withShouldEndSession(false)
-            .getResponse();
-    }
-}
 /**
  * FallbackIntentHandler - Handle all other requests to the skill
  *

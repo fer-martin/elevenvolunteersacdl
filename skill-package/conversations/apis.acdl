@@ -7,12 +7,12 @@ import com.amazon.ask.types.builtins.AMAZON.DayOfWeek
 import slotTypes.*
 import types.*
 // api call to request a volunteer
-action VolunteerRequest APIRequestVolunteer()
+action StatusResponseType APIRequestVolunteer()
 
 // api call to validate arguments for a single volunteer request
 // saves parameters in session
-action ValidatedArgsOnce APIValidateArgsOnce(DURATION duration, TIME time, DATE date, service service)
+action StatusResponseType APIValidateArgsOnce(DURATION duration, TIME time, DATE date, service service)
 
 // api call to validate arguments for a recurring volunteer request
 // saves parameters in session
-action ValidatedArgsRecurring APIValidateArgsRecurring(service service, DayOfWeek dow, TIME time, DURATION duration, DATE since, DATE until)
+action StatusResponseType APIValidateArgsRecurring(service service, DayOfWeek dow, TIME time, DURATION duration, DATE since, DATE until)
