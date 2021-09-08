@@ -17,7 +17,7 @@
                 {
                     "type": "Speech",
                     "contentType": "text",
-                    "content": " ${payload.volunteerRequest.message}",
+                    "content": " ${payload.statusResponse.message}",
                     "description": "si le pongo la variable sola, da error 'something went wrong'"
                 }
             ]

@@ -36,14 +36,14 @@
                 {
                     "type": "Speech",
                     "contentType": "text",
-                    "content": " ${payload.volunteerRequest.message}",
+                    "content": " ${payload.statusResponse.message}",
                     "description": "si le pongo la variable sola, da error 'something went wrong'"
                 },
                 {
                     "type": "Speech",
                     "contentType": "text",
                     "content": "Thank you.",
-                    "description": "${payload.volunteerRequest.message}"
+                    "description": "${payload.statusResponse.message}"
                 }
             ]
         }
