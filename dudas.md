@@ -15,3 +15,7 @@
 * en el recurring, el api final devuelve 0 pero me sale por error como != 0 ?
 
 * en consola como creo un tipo de datos con String y Number
+
+* variables en el payload apla -> something went wrong
+
+* ACDL -> i18n? utterances are hardcoded in the acdl files, and not under any language folder or anything
