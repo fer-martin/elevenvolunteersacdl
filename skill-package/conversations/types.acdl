@@ -1,6 +1,7 @@
 namespace types
 
 import com.amazon.alexa.schema.String
+import com.amazon.alexa.schema.Number
 import com.amazon.ask.types.builtins.AMAZON.DATE
 import com.amazon.ask.types.builtins.AMAZON.DURATION
 import com.amazon.ask.types.builtins.AMAZON.NUMBER
@@ -10,7 +11,7 @@ import slotTypes.*
 
 /* API calls types */
 type VolunteerRequest {
-  NUMBER status
+  Number status
   String message
 }
 
@@ -20,7 +21,7 @@ type ValidatedArgsOnce {
   String start
   String end
   String duration
-  NUMBER status
+  Number status
   String message
 }
 
@@ -28,7 +29,7 @@ type ValidatedArgsRecurring {
   String service
   String date
   String dayofweek
-  NUMBER status
+  Number status
   String message
 }
 

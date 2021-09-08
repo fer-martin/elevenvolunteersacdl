@@ -11,3 +11,5 @@
 * se puede identificar "los martes", contra "el martes"
 
 * los prompts de parametros van en cualquier orden, se puede ordenar?
+
+* en el recurring, el api final devuelve 0 pero me sale por error como != 0 ?
