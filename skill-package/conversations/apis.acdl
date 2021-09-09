@@ -16,3 +16,6 @@ action StatusResponseType APIValidateArgsOnce(DURATION duration, TIME time, DATE
 // api call to validate arguments for a recurring volunteer request
 // saves parameters in session
 action StatusResponseType APIValidateArgsRecurring(service service, DayOfWeek dow, TIME time, DURATION duration, DATE since, DATE until)
+
+// api call to add a new day of the week in recurring requests
+action StatusResponseType APIAddDow(DayOfWeek dow, TIME time, DURATION duration)

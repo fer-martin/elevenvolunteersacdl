@@ -690,6 +690,150 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         }
       ]
     )
+
+    result1 = APIAddDow(
+      dow = ret1.dow,
+      time = ret2.time,
+      duration = ret3.duration
+    )
+
+    //do you want to add another day
+    response(
+      act = Notify {
+        success = true,
+        actionName = APIAddDow
+      },
+      payload = NotifyApiResponseType {
+        statusResponse = result1
+      },
+      response = MultiModalResponse {
+        apla = RequestNewDow
+      },
+      nextAct = Offer {
+        actionName = APIAddDow
+      }
+    )
+
+    //yes!
+    expect(
+      act = Invoke,
+      event = USetAffirm
+    )
+
+    response(
+      act = Request {
+        arguments = [
+          APIAddDow.arguments.dow
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDowPrompt
+      }
+    )
+
+    ret6 = expect(
+      act = Inform,
+      event = USetInformDow
+    )
+
+    response(
+      act = Request {
+        arguments = [
+          APIAddDow.arguments.time
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestTimePrompt
+      }
+    )
+
+    ret7 = expect(
+      act = Inform,
+      event = USetInformTime
+    )
+
+    response(
+      act = Request {
+        arguments = [
+          APIAddDow.arguments.duration
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDurationPrompt
+      }
+    )
+
+    ret8 = expect(
+      act = Inform,
+      event = USetInformDuration
+    )
+
+    ensure( //dow
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDowPrompt
+          },
+          arguments = [
+            APIAddDow.arguments.dow
+          ]
+        }
+      ]
+    )
+    ensure( //time
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestTimePrompt
+          },
+          arguments = [
+            APIAddDow.arguments.time
+          ]
+        }
+      ]
+    )
+    ensure( //duration
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDurationPrompt
+          },
+          arguments = [
+            APIAddDow.arguments.duration
+          ]
+        }
+      ]
+    )
+
+    result2 = APIAddDow(
+      dow = ret6.dow,
+      time = ret7.time,
+      duration = ret8.duration
+    )
+
+    //do you want to add another day
+    response(
+      act = Notify {
+        success = true,
+        actionName = APIAddDow
+      },
+      payload = NotifyApiResponseType {
+        statusResponse = result2
+      },
+      response = MultiModalResponse {
+        apla = RequestNewDow
+      },
+      nextAct = Offer {
+        actionName = APIAddDow
+      }
+    )
+
+    //yes!
+    expect(
+      act = Invoke,
+      event = USetDeny
+    )
+
     dialog_APICallRecurring(args = ConfirmApiRecurringType {
       service = ret1.service,
       dow = ret1.dow,
@@ -857,6 +1001,134 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         }
       ]
     )
+
+    result1 = APIAddDow(
+      dow = ret1.dow,
+      time = ret3.time,
+      duration = ret4.duration
+    )
+
+    //do you want to add another day
+    response(
+      act = Notify {
+        success = true,
+        actionName = APIAddDow
+      },
+      payload = NotifyApiResponseType {
+        statusResponse = result1
+      },
+      response = MultiModalResponse {
+        apla = RequestNewDow
+      },
+      nextAct = Offer {
+        actionName = APIAddDow
+      }
+    )
+
+    //yes!
+    expect(
+      act = Invoke,
+      event = USetAffirm
+    )
+
+    response(
+      act = Request {
+        arguments = [
+          APIAddDow.arguments.dow
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDowPrompt
+      }
+    )
+
+    ret7 = expect(
+      act = Inform,
+      event = USetInformDowAndTime
+    )
+
+    response(
+      act = Request {
+        arguments = [
+          APIAddDow.arguments.duration
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDurationPrompt
+      }
+    )
+
+    ret8 = expect(
+      act = Inform,
+      event = USetInformDuration
+    )
+
+    ensure( //dow
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDowPrompt
+          },
+          arguments = [
+            APIAddDow.arguments.dow
+          ]
+        }
+      ]
+    )
+    ensure( //time
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestTimePrompt
+          },
+          arguments = [
+            APIAddDow.arguments.time
+          ]
+        }
+      ]
+    )
+    ensure( //duration
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDurationPrompt
+          },
+          arguments = [
+            APIAddDow.arguments.duration
+          ]
+        }
+      ]
+    )
+
+    result2 = APIAddDow(
+      dow = ret7.dow,
+      time = ret7.time,
+      duration = ret8.duration
+    )
+
+    //do you want to add another day
+    response(
+      act = Notify {
+        success = true,
+        actionName = APIAddDow
+      },
+      payload = NotifyApiResponseType {
+        statusResponse = result2
+      },
+      response = MultiModalResponse {
+        apla = RequestNewDow
+      },
+      nextAct = Offer {
+        actionName = APIAddDow
+      }
+    )
+
+    //yes!
+    expect(
+      act = Invoke,
+      event = USetDeny
+    )
+
     dialog_APICallRecurring(args = ConfirmApiRecurringType {
       service = ret2.service,
       dow = ret1.dow,
@@ -993,6 +1265,118 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         }
       ]
     )
+
+    result1 = APIAddDow(
+      dow = ret1.dow,
+      time = ret1.time,
+      duration = ret2.duration,
+    )
+
+    //do you want to add another day
+    response(
+      act = Notify {
+        success = true,
+        actionName = APIAddDow
+      },
+      payload = NotifyApiResponseType {
+        statusResponse = result1
+      },
+      response = MultiModalResponse {
+        apla = RequestNewDow
+      },
+      nextAct = Offer {
+        actionName = APIAddDow
+      }
+    )
+
+    //yes!
+    expect(
+      act = Invoke,
+      event = USetAffirm
+    )
+
+    response(
+      act = Request {
+        arguments = [
+          APIAddDow.arguments.dow
+        ]
+      },
+      response = MultiModalResponse {
+        apla = RequestDowPrompt
+      }
+    )
+
+    ret7 = expect(
+      act = Inform,
+      event = USetInformDowTimeAndDuration
+    )
+
+    ensure( //dow
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDowPrompt
+          },
+          arguments = [
+            APIAddDow.arguments.dow
+          ]
+        }
+      ]
+    )
+    ensure( //time
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestTimePrompt
+          },
+          arguments = [
+            APIAddDow.arguments.time
+          ]
+        }
+      ]
+    )
+    ensure( //duration
+      requestArgs = [
+        RequestArguments {
+          response = MultiModalResponse {
+            apla = RequestDurationPrompt
+          },
+          arguments = [
+            APIAddDow.arguments.duration
+          ]
+        }
+      ]
+    )
+
+    result2 = APIAddDow(
+      dow = ret7.dow,
+      time = ret7.time,
+      duration = ret7.duration
+    )
+
+    //do you want to add another day
+    response(
+      act = Notify {
+        success = true,
+        actionName = APIAddDow
+      },
+      payload = NotifyApiResponseType {
+        statusResponse = result2
+      },
+      response = MultiModalResponse {
+        apla = RequestNewDow
+      },
+      nextAct = Offer {
+        actionName = APIAddDow
+      }
+    )
+
+    //yes!
+    expect(
+      act = Invoke,
+      event = USetDeny
+    )
+    
     dialog_APICallRecurring(args = ConfirmApiRecurringType {
       service = ret1.service,
       dow = ret1.dow,

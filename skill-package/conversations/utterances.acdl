@@ -192,6 +192,15 @@ USetInformDowAndTime = utterances<DowAndTimeType>(
   ]
 )
 
+USetInformDowTimeAndDuration = utterances<DowTimeAndDurationType>(
+  samples = [
+    "every {dow} at {time} for {duration}",
+    "on every {dow} at {time} for {duration}",
+    "on {dow} at {time} for {duration}",
+    "{dow} at {time} for {duration}"
+  ]
+)
+
 USetInformDateSince = utterances<DateType>(
   samples = [
     "since {date}",

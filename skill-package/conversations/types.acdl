@@ -75,6 +75,13 @@ type ServiceDowAndTimeType {
   DayOfWeek dow
   TIME time
 }
+
+type DowTimeAndDurationType {
+  DayOfWeek dow
+  TIME time
+  DURATION duration
+}
+
 /* Dialog payloads types */
 type ConfirmApiType {
   DATE date
