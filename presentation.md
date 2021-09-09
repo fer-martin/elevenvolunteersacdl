@@ -21,11 +21,11 @@ date/time requested overlaps with a previous request made.
 
 ## What we did
 
-We created two skills, one in console and other in ACDL, they are practically the same.
+We created two skills, one in console and other in ACDL, they are practically the same. That because we want to learn both ways to do it, and also because we are more confortable with code than the console.
 
 ## The interaction
 
-This is a sequence diagram of an example interaction. 
+This is a sequence diagram of an example interaction requesting a volunteer a single time. 
 
 ```mermaid
 sequenceDiagram
@@ -42,6 +42,39 @@ sequenceDiagram
     Alexa -->> Lambda: call APIRequestVolunteer
     note right of Lambda: Uses saved parameters to request
     Lambda -->> Alexa: result: Ok
+    Alexa ->> User: done!
+```
+
+This sequence diagram represents an example interaction requesting a volunteer recurringly. 
+
+```mermaid
+sequenceDiagram
+    User ->> Alexa: I need a volunteer with a guide dog every monday 
+    Alexa ->> User: at what time?
+    User ->> Alexa: at 9 am
+    Alexa ->> User: For how long?
+    User ->> Alexa: One hour
+    Alexa ->> User: Since when?
+    User ->> Alexa: Tomorrow
+    Alexa ->> User: Until what date?
+    User ->> Alexa: December 1st
+    Alexa ->> User: do you want to add a new day of the week?
+    User -->> Alexa: yes
+    Alexa -->> User: what day?
+    User -->> Alexa: Tuesdays at 10 am for one hour
+    Alexa -->> Lambda: call APIAddDow
+    note right of Lambda: Save parameters in session
+    Lambda -->> Alexa: result: OK
+    Alexa ->> User: do you want to add a new day of the week?
+    User ->> Alexa: no
+    Alexa -->> Lambda: call APIValidateArgsOnce
+    note right of Lambda: Save parameters in session
+    Lambda -->> Alexa: result: Guide dog every monday ... until December 1st
+    Alexa ->> User: ok, I will ask for a Guide dog ..., ok?
+    User ->> Alexa: yes
+    Alexa -->> Lambda: call APIRequestVolunteer
+    note right of Lambda: Uses saved parameters to request
+    Lambda -->> Alexa: result: OK
     Alexa ->> User: done!
 ```
 ## Some issues
@@ -61,3 +94,4 @@ sequenceDiagram
 * There are some particulars in Spanish that we want to try, but we do not have access to that beta yet. 
     For example, it's not the same "el martes a las diez" to "los martes a las diez" (first one meaning this tuesday at 10am, the second implies "every tuesday at 10 am")
 
+* How to loop in the conversation (ie do you want to add a new day?) until the user denies, and then do the call.
