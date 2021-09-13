@@ -11,8 +11,7 @@
                 {
                     "type": "Speech",
                     "contentType": "text",
-                    "content": "I'm sorry, we couldn't request the volunteer.",
-                    "description": ""
+                    "content": "I'm sorry, we couldn't request the volunteer."
                 },
                 {
                     "type": "Speech",

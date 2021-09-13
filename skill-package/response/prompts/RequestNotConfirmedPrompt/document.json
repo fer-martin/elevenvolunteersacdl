@@ -11,8 +11,7 @@
                 {
                     "type": "Speech",
                     "contentType": "text",
-                    "content": "Ok.",
-                    "description": ""
+                    "content": "Ok."
                 }
             ]
         }

@@ -7,13 +7,11 @@
         ],
         "item": {
             "type": "Sequencer",
-            "description": "Change 'type' above to try different Selector Component Types like Sequencer",
             "items": [
                 {
                     "type": "Speech",
                     "contentType": "text",
-                    "content": "Ok",
-                    "description": "Expand on 'items' array to add multiple prompts, use response template arguments by adding it to 'content' like this ${payload.input_argument_name} and add SSML by changing 'contentType' to 'SSML' and adding SSML to 'content' <amazon:effect name=\"whispered\">like that</amazon:effect>"
+                    "content": "Ok"
                 },
                 {
                     "type": "Speech",
