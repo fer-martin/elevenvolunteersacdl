@@ -54,9 +54,9 @@ dialog Nothing dialog_APICallOnce(ConfirmApiType args) {
       event = USetAffirm
     )
     //... does the api call requesting the volunteer to lambda ...
-    result = APIRequestVolunteer()
+    result0 = APIRequestVolunteer()
 
-    if (result.status == 0) {
+    if (result0.status == 0) {
       // la llamada a la API anduvo ok!
       //i have requested the volunteer!
       response(
@@ -65,7 +65,7 @@ dialog Nothing dialog_APICallOnce(ConfirmApiType args) {
           actionName = APIRequestVolunteer
         },
         payload = NotifyApiResponseType {
-          statusResponse = result
+          statusResponse = result0
         },
         response = MultiModalResponse {
           apla = RequestConfirmedPrompt
@@ -80,7 +80,7 @@ dialog Nothing dialog_APICallOnce(ConfirmApiType args) {
           actionName = APIRequestVolunteer
         },
         payload = NotifyApiResponseType {
-          statusResponse = result
+          statusResponse = result0
         },
         response = MultiModalResponse {
           apla = RequestRejectedPrompt
@@ -512,9 +512,9 @@ dialog Nothing dialog_APICallRecurring(ConfirmApiRecurringType args) {
       event = USetAffirm
     )
     //... does the api call requesting the volunteer to lambda ...
-    result = APIRequestVolunteer()
+    result1 = APIRequestVolunteer()
 
-    if (result.status == 0) {
+    if (result1.status == 0) {
       // la llamada a la API anduvo ok!
       //i have requested the volunteer!
       response(
@@ -523,7 +523,7 @@ dialog Nothing dialog_APICallRecurring(ConfirmApiRecurringType args) {
           actionName = APIRequestVolunteer
         },
         payload = NotifyApiResponseType {
-          statusResponse = result
+          statusResponse = result1
         },
         response = MultiModalResponse {
           apla = RequestConfirmedPrompt
@@ -538,7 +538,7 @@ dialog Nothing dialog_APICallRecurring(ConfirmApiRecurringType args) {
           actionName = APIRequestVolunteer
         },
         payload = NotifyApiResponseType {
-          statusResponse = result
+          statusResponse = result1
         },
         response = MultiModalResponse {
           apla = RequestRejectedPrompt
@@ -691,7 +691,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       ]
     )
 
-    result1 = APIAddDow(
+    result2 = APIAddDow(
       dow = ret1.dow,
       time = ret2.time,
       duration = ret3.duration
@@ -704,7 +704,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         actionName = APIAddDow
       },
       payload = NotifyApiResponseType {
-        statusResponse = result1
+        statusResponse = result2
       },
       response = MultiModalResponse {
         apla = RequestNewDow
@@ -805,7 +805,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       ]
     )
 
-    result2 = APIAddDow(
+    result3 = APIAddDow(
       dow = ret6.dow,
       time = ret7.time,
       duration = ret8.duration
@@ -818,7 +818,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         actionName = APIAddDow
       },
       payload = NotifyApiResponseType {
-        statusResponse = result2
+        statusResponse = result3
       },
       response = MultiModalResponse {
         apla = RequestNewDow
@@ -1002,7 +1002,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       ]
     )
 
-    result1 = APIAddDow(
+    result4 = APIAddDow(
       dow = ret1.dow,
       time = ret3.time,
       duration = ret4.duration
@@ -1015,7 +1015,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         actionName = APIAddDow
       },
       payload = NotifyApiResponseType {
-        statusResponse = result1
+        statusResponse = result4
       },
       response = MultiModalResponse {
         apla = RequestNewDow
@@ -1100,7 +1100,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       ]
     )
 
-    result2 = APIAddDow(
+    result5 = APIAddDow(
       dow = ret7.dow,
       time = ret7.time,
       duration = ret8.duration
@@ -1113,7 +1113,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         actionName = APIAddDow
       },
       payload = NotifyApiResponseType {
-        statusResponse = result2
+        statusResponse = result5
       },
       response = MultiModalResponse {
         apla = RequestNewDow
@@ -1266,7 +1266,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       ]
     )
 
-    result1 = APIAddDow(
+    result6 = APIAddDow(
       dow = ret1.dow,
       time = ret1.time,
       duration = ret2.duration,
@@ -1279,7 +1279,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         actionName = APIAddDow
       },
       payload = NotifyApiResponseType {
-        statusResponse = result1
+        statusResponse = result6
       },
       response = MultiModalResponse {
         apla = RequestNewDow
@@ -1348,7 +1348,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
       ]
     )
 
-    result2 = APIAddDow(
+    result7 = APIAddDow(
       dow = ret7.dow,
       time = ret7.time,
       duration = ret7.duration
@@ -1361,7 +1361,7 @@ dialog Nothing dialog_RequestVolunteerRecurring() {
         actionName = APIAddDow
       },
       payload = NotifyApiResponseType {
-        statusResponse = result2
+        statusResponse = result7
       },
       response = MultiModalResponse {
         apla = RequestNewDow

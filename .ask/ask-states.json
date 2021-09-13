@@ -8,8 +8,8 @@
             "default": {
               "lambda": {
                 "arn": "arn:aws:lambda:us-east-1:880685465873:function:ask-elevenvolunteersacdl-default-default-1630019721027",
-                "lastModified": "2021-09-09T01:35:17.864+0000",
-                "revisionId": "be27bd79-86db-43be-a7de-8e2ac61507dd"
+                "lastModified": "2021-09-09T14:35:15.703+0000",
+                "revisionId": "29bbde24-b134-4b8d-aaec-02b38952e327"
               },
               "iamRole": "arn:aws:iam::880685465873:role/ask-lambda-ElevenVolunteersACDL-1630019712116"
             }
@@ -18,7 +18,7 @@
       },
       "skillId": "amzn1.ask.skill.e6e2a199-9885-49f6-8a53-4178e391c764",
       "skillMetadata": {
-        "lastDeployHash": "vTOys+SNfn4p8QlA4TXrV/omoIY="
+        "lastDeployHash": "M1CTed6QFANl/zMmd0x80UJ8jTA="
       },
       "code": {
         "default": {
